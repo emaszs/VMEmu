@@ -8,6 +8,7 @@ public final class VM {
 
     public static void main(final String[] args) {
         memory.initAllocationInfo();
+        memory.initSupervisorAllocationInfo();
         System.out.println(memory.getNumFreeBlocks());
         memory.allocateNumOfRandomBlocks(10);
         System.out.println(memory.getNumFreeBlocks());
