@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+
 public class Memory {
 
 	public Word[] block = new Word[RM.BLOCK_SIZE];
@@ -108,7 +111,7 @@ public class Memory {
 					}
 					allocatedBlockAdr += "0" + Integer.toString(blockCounter)
 							+ "0";
-					
+
 					// Sets value in page table for allocated block
 					int realAddress = pageTableBlockAddress * 10
 							+ pageTableCounter;
@@ -139,5 +142,32 @@ public class Memory {
 
 	public void writeToRealAddress(final int adr, final String val) {
 		this.memory[adr / 10].getWord(adr % 10).setString(val);
+	}
+
+	public void writeToVirtualAddress(final VM vm, final int virtualAdr, final String val) {
+		int realAdr = 0;
+		int virtualBlock = 0;
+		int pageAdr = 0;
+		int pageTableAdr = Integer.parseInt(vm.ptp.getString());
+		
+		virtualBlock = virtualAdr / 10;
+		pageAdr = Integer.parseInt(this.memory[pageTableAdr / 10].getWord(virtualBlock).getString());
+		realAdr = pageAdr + virtualAdr % 10;
+		
+		this.writeToRealAddress(realAdr, val);
+	}
+
+	public void loadProgram(final VM vm, final BufferedReader flash) {
+		int VMProgramIC = 0;
+		String line = null;
+		try {
+			while ((line = flash.readLine()) != null) {
+				this.writeToVirtualAddress(vm, VMProgramIC, line);
+				VMProgramIC++;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
