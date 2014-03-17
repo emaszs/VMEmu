@@ -140,20 +140,38 @@ public class Memory {
 		}
 	}
 
-	public void writeToRealAddress(final int adr, final String val) {
-		this.memory[adr / 10].getWord(adr % 10).setString(val);
+	public String getFromRealAddress(int realAdr) {
+		return this.memory[realAdr / 10].getWord(realAdr % 10).getString();
+	}
+	
+	public String getFromVirtualAddress(final VM vm, int virtualAdr) {
+
+		int realAdr = this.translateFromVirtualToReal(vm, virtualAdr);
+		return this.getFromRealAddress(realAdr);
 	}
 
-	public void writeToVirtualAddress(final VM vm, final int virtualAdr, final String val) {
+	public int translateFromVirtualToReal(final VM vm, int virtualAdr) {
 		int realAdr = 0;
 		int virtualBlock = 0;
 		int pageAdr = 0;
 		int pageTableAdr = Integer.parseInt(vm.ptp.getString());
-		
+
 		virtualBlock = virtualAdr / 10;
-		pageAdr = Integer.parseInt(this.memory[pageTableAdr / 10].getWord(virtualBlock).getString());
+		pageAdr = Integer.parseInt(this.memory[pageTableAdr / 10].getWord(
+				virtualBlock).getString());
 		realAdr = pageAdr + virtualAdr % 10;
-		
+
+		// TODO
+		return realAdr;
+	}
+
+	public void writeToRealAddress(final int adr, final String val) {
+		this.memory[adr / 10].getWord(adr % 10).setString(val);
+	}
+
+	public void writeToVirtualAddress(final VM vm, final int virtualAdr,
+			final String val) {
+		int realAdr = this.translateFromVirtualToReal(vm, virtualAdr);
 		this.writeToRealAddress(realAdr, val);
 	}
 

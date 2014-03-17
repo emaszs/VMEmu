@@ -20,13 +20,13 @@ public final class RM {
 
 		memory.initAllocationInfo();
 		memory.allocatePageTableToVM(basicVM);
-//		memory.allocatePageTableToVM(newVM);
+		memory.allocatePageTableToVM(newVM);
 		memory.initSupervisorAllocationInfo();
 		System.out.println("Amount of free memory blocks left: "
 				+ memory.getNumFreeBlocks());
 
 		memory.allocateNumBlocksToVM(10, basicVM);
-//		memory.allocateNumBlocksToVM(10, newVM);
+		memory.allocateNumBlocksToVM(10, newVM);
 		
 		BufferedReader flash;
 		try {
@@ -46,6 +46,8 @@ public final class RM {
 
 		System.out.println("Amount of free memory blocks left: "
 				+ memory.getNumFreeBlocks());
+		
+		System.out.println("0011 virtual value: " + memory.getFromVirtualAddress(basicVM, 11));
 		//
 		// for (int i = 0; i < MEMORY_SIZE; i++) {
 		// if (memory.allocatedBlocks[i] == true) {
