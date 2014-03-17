@@ -13,7 +13,7 @@ public final class RM {
 		VM newVM = new VM();
 
 		memory.initMemory();
-		
+
 		memory.initAllocationInfo();
 		memory.allocatePageTableToVM(basicVM);
 		memory.allocatePageTableToVM(newVM);
@@ -21,10 +21,9 @@ public final class RM {
 		System.out.println("Amount of free memory blocks left: "
 				+ memory.getNumFreeBlocks());
 
-
 		memory.allocateNumBlocksToVM(10, basicVM);
 		memory.allocateNumBlocksToVM(10, newVM);
-		
+
 		System.out.println("Supervisor memory:");
 		memory.printMemory(40, 50);
 
@@ -36,6 +35,5 @@ public final class RM {
 		// System.out.println(i);
 		// }
 		// }
-
 	}
 }

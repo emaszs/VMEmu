@@ -21,7 +21,7 @@ public class Memory {
 		this.printMemory(0, RM.MEMORY_SIZE);
 	}
 
-	public void printMemory(int startIdx, int endIdx) {
+	public void printMemory(final int startIdx, final int endIdx) {
 		for (int i = startIdx; i < endIdx; i++) {
 			String line = new String();
 			for (int j = 0; j < RM.BLOCK_SIZE; j++) {
@@ -59,6 +59,10 @@ public class Memory {
 		allocatedBlocks[idx] = true;
 	}
 
+	/*
+	 * Finds a number of free random blocks in memory, allocates them to the VM
+	 * and fills out it's page table accordingly.
+	 */
 	public void allocateNumBlocksToVM(final int numBlocksToAllocate, VM vm) {
 
 		int numSuccAllocated = 0;
@@ -97,15 +101,18 @@ public class Memory {
 							* 10
 							+ Character.getNumericValue(vm.ptp.getChar(2));
 
-					// Sets value in page table for allocated block
-					String word = new String();
+					// Constructing string of Word format
+					String allocatedBlockAdr = new String();
 					if (blockCounter < 10) {
-						word += "0";
+						allocatedBlockAdr += "0";
 					}
-					word += "0" + Integer.toString(blockCounter) + "0";
-					this.memory[pageTableBlockAddress]
-							.getWord(pageTableCounter).setString(word);
-
+					allocatedBlockAdr += "0" + Integer.toString(blockCounter)
+							+ "0";
+					
+					// Sets value in page table for allocated block
+					int realAddress = pageTableBlockAddress * 10
+							+ pageTableCounter;
+					writeToRealAddress(realAddress, allocatedBlockAdr);
 				}
 				blockCounter++;
 			}
@@ -114,7 +121,7 @@ public class Memory {
 		}
 	}
 
-	public void allocatePageTableToVM(VM vm) {
+	public void allocatePageTableToVM(final VM vm) {
 		// Find free block in supervisor memory
 		boolean blockFound = false;
 		for (int i = RM.MEMORY_SIZE - RM.SUPERVISOR_SIZE; i < RM.MEMORY_SIZE; i++) {
@@ -128,5 +135,9 @@ public class Memory {
 		if (!blockFound) {
 			System.out.println("Could not find free block in SM");
 		}
+	}
+
+	public void writeToRealAddress(final int adr, final String val) {
+		this.memory[adr / 10].getWord(adr % 10).setString(val);
 	}
 }
