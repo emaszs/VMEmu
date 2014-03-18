@@ -13,7 +13,7 @@ public final class RM {
 	public static Word ptp = new Word(); // page table pointer
 	public static Word r1 = new Word(), r2 = new Word();
 	public static int ic; // 2 bytes instruction ocunter
-	public static Word sf = new Word(); // 2 bytes, OF and SF
+	public static char[] sf = new char[2];// 2 bytes, OF and SF
 	public static int sp = 0; // stack pointer
 	public static char mode = '0'; // 0 - user, 1 - supervisor
 	public static char pi = '0'; // program interrupts
@@ -59,10 +59,8 @@ public final class RM {
 		}
 
 		Processing.processCommand(memory.getFromVirtualAddress(1));
-		RM.r1.setString("1111");
 		Processing.processCommand(memory.getFromVirtualAddress(2));
-		RM.memory.writeToVirtualAddress(98, "PUSD");
-		Processing.processCommand(memory.getFromVirtualAddress(3));
+
 		System.out.println("sp value: " + RM.sp);
 		System.out.println("r1 value: " + RM.r1.getString());
 		
