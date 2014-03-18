@@ -12,7 +12,7 @@ public final class RM {
 
 	public static Word ptp = new Word(); // page table pointer
 	public static Word r1 = new Word(), r2 = new Word();
-	public static int ic; // 2 bytes instruction ocunter
+	public static int ic; // 2 bytes instruction counter
 	public static char[] sf = new char[2];// 2 bytes, OF and SF
 	public static int sp = 0; // stack pointer
 	public static char mode = '0'; // 0 - user, 1 - supervisor
@@ -50,19 +50,21 @@ public final class RM {
 		BufferedReader flash;
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/user/Desktop/prog.txt"));
+					"C:/Users/Emilis/Desktop/prog.txt"));
 			RM.ptp.setString(basicRMptp.getString());
 			memory.loadProgram(basicRM, flash);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		RM.r1.setString(Integer.toString(15));
 
-		Processing.processCommand(memory.getFromVirtualAddress(1));
+		Processing.processCommand(memory.getFromVirtualAddress(0));
 		Processing.processCommand(memory.getFromVirtualAddress(2));
 
 		System.out.println("sp value: " + RM.sp);
 		System.out.println("r1 value: " + RM.r1.getString());
+		System.out.println("r2 value: " + RM.r2.getString());
 		
 		System.out.println("Basic memory:");
 		memory.printMemory(0, 40);

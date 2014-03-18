@@ -6,7 +6,7 @@ public class Memory {
 	public Word[] block = new Word[RM.BLOCK_SIZE];
 	public Block[] memory = new Block[RM.MEMORY_SIZE];
 
-	// Stores infoRMation about which blocks are in use by VMs.
+	// Stores information about which blocks are in use by VMs.
 	public boolean[] allocatedBlocks = new boolean[RM.MEMORY_SIZE];
 
 	public void initMemory() {
@@ -104,7 +104,7 @@ public class Memory {
 							* 10
 							+ Character.getNumericValue(RM.ptp.getChar(2));
 
-					// Constructing string of Word foRMat
+					// Constructing string of Word format
 					String allocatedBlockAdr = new String();
 					if (blockCounter < 10) {
 						allocatedBlockAdr += "0";
