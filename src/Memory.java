@@ -66,7 +66,7 @@ public class Memory {
 	 * Finds a number of free random blocks in memory, allocates them to the VM
 	 * and fills out it's page table accordingly.
 	 */
-	public void allocateNumBlocksToVM(final int numBlocksToAllocate, VM vm) {
+	public void allocateNumBlocksToVM(final int numBlocksToAllocate, RM rm) {
 
 		int numSuccAllocated = 0;
 		int pageTableCounter = 0;
@@ -100,9 +100,9 @@ public class Memory {
 				if (freeBlockCounter == randomBlock) {
 					allocatedBlocks[blockCounter] = true;
 					int pageTableBlockAddress = Character
-							.getNumericValue(vm.ptp.getChar(1))
+							.getNumericValue(rm.ptp.getChar(1))
 							* 10
-							+ Character.getNumericValue(vm.ptp.getChar(2));
+							+ Character.getNumericValue(rm.ptp.getChar(2));
 
 					// Constructing string of Word format
 					String allocatedBlockAdr = new String();
@@ -124,14 +124,14 @@ public class Memory {
 		}
 	}
 
-	public void allocatePageTableToVM(final VM vm) {
+	public void allocatePageTableToVM(final RM rm) {
 		// Find free block in supervisor memory
 		boolean blockFound = false;
 		for (int i = RM.MEMORY_SIZE - RM.SUPERVISOR_SIZE; i < RM.MEMORY_SIZE; i++) {
 			if (allocatedBlocks[i] == false && !blockFound) {
 				blockFound = true;
 				allocatedBlocks[i] = true;
-				vm.ptp.setString("0" + Integer.toString(i) + "0");
+				rm.ptp.setString("0" + Integer.toString(i) + "0");
 				break;
 			}
 		}
@@ -144,17 +144,17 @@ public class Memory {
 		return this.memory[realAdr / 10].getWord(realAdr % 10).getString();
 	}
 	
-	public String getFromVirtualAddress(final VM vm, int virtualAdr) {
+	public String getFromVirtualAddress(final RM rm, int virtualAdr) {
 
-		int realAdr = this.translateFromVirtualToReal(vm, virtualAdr);
+		int realAdr = this.translateFromVirtualToReal(rm, virtualAdr);
 		return this.getFromRealAddress(realAdr);
 	}
 
-	public int translateFromVirtualToReal(final VM vm, int virtualAdr) {
+	public int translateFromVirtualToReal(final RM rm, int virtualAdr) {
 		int realAdr = 0;
 		int virtualBlock = 0;
 		int pageAdr = 0;
-		int pageTableAdr = Integer.parseInt(vm.ptp.getString());
+		int pageTableAdr = Integer.parseInt(rm.ptp.getString());
 
 		virtualBlock = virtualAdr / 10;
 		pageAdr = Integer.parseInt(this.memory[pageTableAdr / 10].getWord(
@@ -169,18 +169,18 @@ public class Memory {
 		this.memory[adr / 10].getWord(adr % 10).setString(val);
 	}
 
-	public void writeToVirtualAddress(final VM vm, final int virtualAdr,
+	public void writeToVirtualAddress(final RM rm, final int virtualAdr,
 			final String val) {
-		int realAdr = this.translateFromVirtualToReal(vm, virtualAdr);
+		int realAdr = this.translateFromVirtualToReal(rm, virtualAdr);
 		this.writeToRealAddress(realAdr, val);
 	}
 
-	public void loadProgram(final VM vm, final BufferedReader flash) {
+	public void loadProgram(final RM rm, final BufferedReader flash) {
 		int VMProgramIC = 0;
 		String line = null;
 		try {
 			while ((line = flash.readLine()) != null) {
-				this.writeToVirtualAddress(vm, VMProgramIC, line);
+				this.writeToVirtualAddress(rm, VMProgramIC, line);
 				VMProgramIC++;
 			}
 		} catch (IOException e) {

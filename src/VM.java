@@ -1,4 +1,4 @@
 
 public class VM {
-	public Word ptp = new Word();
+	//public Word ptp = new Word();
 }

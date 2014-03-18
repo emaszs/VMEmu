@@ -10,28 +10,48 @@ public final class RM {
 
 	public static Memory memory = new Memory();
 
-	public Word ptp = new Word();
+	public Word ptp = new Word(); // page table pointer
+	public Word r1, r2 = new Word();
+	public int ic; // 2 bytes instruction ocunter
+	public Word sf = new Word(); // 2 bytes, OF and SF
+	public int sp = 0; // stack pointer 
+	public char mode = '0'; // 0 - user, 1 - supervisor
+	public char pi = '0'; // program interrupts
+	public char si = '0'; // supervisor interrupts
+	public int t = 0; // timer
+	public int chst1, chst2, chst3 = 0; //	
 
+	
 	public static void main(final String[] args) {
-		VM basicVM = new VM();
-		VM newVM = new VM();
+		RM basicRM = new RM();
+		//RM newVM = new RM();
 
 		memory.initMemory();
 
 		memory.initAllocationInfo();
-		memory.allocatePageTableToVM(basicVM);
-		memory.allocatePageTableToVM(newVM);
+		
+		memory.allocatePageTableToVM(basicRM);		
+		Word basicRMptp = new Word();
+		basicRMptp.setString(basicRM.ptp.getString());
+		
+		memory.allocatePageTableToVM(basicRM);
+		Word newRMptp = new Word();
+		newRMptp.setString(basicRM.ptp.getString());
+		
 		memory.initSupervisorAllocationInfo();
 		System.out.println("Amount of free memory blocks left: "
 				+ memory.getNumFreeBlocks());
 
-		memory.allocateNumBlocksToVM(10, basicVM);
-		memory.allocateNumBlocksToVM(10, newVM);
+		basicRM.ptp.setString(basicRMptp.getString());
+		memory.allocateNumBlocksToVM(10, basicRM);
+		
+		basicRM.ptp.setString(newRMptp.getString());
+		memory.allocateNumBlocksToVM(10, basicRM);
 		
 		BufferedReader flash;
 		try {
 			flash = new BufferedReader(new FileReader("C:/Users/user/Desktop/prog.txt"));
-			memory.loadProgram(basicVM, flash);
+			memory.loadProgram(basicRM, flash);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -46,8 +66,8 @@ public final class RM {
 
 		System.out.println("Amount of free memory blocks left: "
 				+ memory.getNumFreeBlocks());
-		
-		System.out.println("0011 virtual value: " + memory.getFromVirtualAddress(basicVM, 11));
+			
+			System.out.println("0011 virtual value: " + memory.getFromVirtualAddress(basicRM, 11));
 		//
 		// for (int i = 0; i < MEMORY_SIZE; i++) {
 		// if (memory.allocatedBlocks[i] == true) {
