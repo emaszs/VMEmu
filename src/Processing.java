@@ -1,4 +1,3 @@
-
 public class Processing {
 	public static void processCommand(String cmd) {
 //		String cmd = wordCmd.getString();
@@ -15,7 +14,18 @@ public class Processing {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
 			String val = RM.r1.getString();
 			RM.memory.writeToVirtualAddress(adr, val);	
+		} else if (cmd.matches("AW\\d\\d")) {
+		// TODO allocate word
+		} else if (cmd.matches("PUSR")) {
+			RM.sp = RM.sp - 1;
+			RM.memory.writeToVirtualAddress(RM.sp, RM.r1.toString());
+		} else if (cmd.matches("POPR")) {
+			RM.r1.setString(RM.memory.getFromVirtualAddress(RM.sp));
+			RM.sp = RM.sp + 1;
+		} else if (cmd.matches("AD\\d\\d")) {
+			// TODO
 		}
+		
 			
 	}
 }

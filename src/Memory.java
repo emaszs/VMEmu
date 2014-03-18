@@ -121,6 +121,9 @@ public class Memory {
 			}
 			pageTableCounter++;
 			numSuccAllocated++;
+			
+			// TODO init stackpointer
+			RM.sp = 99;
 		}
 	}
 

@@ -23,4 +23,8 @@ public class Word {
 			this.word = val;
 		}
 	}
+	
+	public String toString() {
+		return this.word;
+	}
 }

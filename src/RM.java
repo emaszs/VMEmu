@@ -33,9 +33,9 @@ public final class RM {
 		Word basicRMptp = new Word();
 		basicRMptp.setString(RM.ptp.getString());
 
-		memory.allocatePageTableToVM();
-		Word newRMptp = new Word();
-		newRMptp.setString(RM.ptp.getString());
+//		memory.allocatePageTableToVM();
+//		Word newRMptp = new Word();
+//		newRMptp.setString(RM.ptp.getString());
 
 		memory.initSupervisorAllocationInfo();
 		System.out.println("Amount of free memory blocks left: "
@@ -44,8 +44,8 @@ public final class RM {
 		RM.ptp.setString(basicRMptp.getString());
 		memory.allocateNumBlocksToVM(10);
 
-		RM.ptp.setString(newRMptp.getString());
-		memory.allocateNumBlocksToVM(10);
+//		RM.ptp.setString(newRMptp.getString());
+//		memory.allocateNumBlocksToVM(10);
 
 		BufferedReader flash;
 		try {
@@ -58,6 +58,14 @@ public final class RM {
 			e.printStackTrace();
 		}
 
+		Processing.processCommand(memory.getFromVirtualAddress(1));
+		RM.r1.setString("1111");
+		Processing.processCommand(memory.getFromVirtualAddress(2));
+		RM.memory.writeToVirtualAddress(98, "PUSD");
+		Processing.processCommand(memory.getFromVirtualAddress(3));
+		System.out.println("sp value: " + RM.sp);
+		System.out.println("r1 value: " + RM.r1.getString());
+		
 		System.out.println("Basic memory:");
 		memory.printMemory(0, 40);
 
@@ -70,8 +78,7 @@ public final class RM {
 		System.out.println("0011 virtual value: "
 				+ memory.getFromVirtualAddress(11));
 		
-		Processing.processCommand(memory.getFromVirtualAddress(1));
-		System.out.println("r1 value: " + RM.r1.getString());
+
 		//
 		// for (int i = 0; i < MEMORY_SIZE; i++) {
 		// if (memory.allocatedBlocks[i] == true) {
