@@ -43,6 +43,7 @@ public class Hdd {
 	}
 
 	public static void writeToFile(int fileNum, String val) {
+		System.out.println("Writing value: " + val);
 		if (fileList[fileNum].fileIsOpenForWriting
 				&& !fileList[fileNum].fileIsBeingWrittenTo) {
 
