@@ -22,68 +22,68 @@ public final class RM {
 	public static int chst1, chst2, chst3 = 0; //
 
 	public static void main(final String[] args) {
-//		RM basicRM = new RM();
-//
-//		memory.initMemory();
-//
-//		memory.initAllocationInfo();
-//
-//		memory.allocatePageTableToVM();
-//		Word basicRMptp = new Word();
-//		basicRMptp.setString(RM.ptp.getString());
-//
-//		memory.initSupervisorAllocationInfo();
-//		System.out.println("Amount of free memory blocks left: "
-//				+ memory.getNumFreeBlocks());
-//
-//		RM.ptp.setString(basicRMptp.getString());
-//		memory.allocateNumBlocksToVM(10);
-//
-//		BufferedReader flash;
-//		try {
-//			flash = new BufferedReader(new FileReader(
-//					"C:/Users/Emilis/Desktop/prog.txt"));
-//			RM.ptp.setString(basicRMptp.getString());
-//			memory.loadProgram(basicRM, flash);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		RM.r1.setString(Integer.toString(15));
-//
-//		Processing.processCommand(memory.getFromVirtualAddress(0));
-//		Processing.processCommand(memory.getFromVirtualAddress(2));
-//
-//		System.out.println("sp value: " + RM.sp);
-//		System.out.println("r1 value: " + RM.r1.getString());
-//		System.out.println("r2 value: " + RM.r2.getString());
+		RM basicRM = new RM();
+
+		memory.initMemory();
+
+		memory.initAllocationInfo();
+
+		memory.allocatePageTableToVM();
+		Word basicRMptp = new Word();
+		basicRMptp.setString(RM.ptp.getString());
+
+		memory.initSupervisorAllocationInfo();
+		System.out.println("Amount of free memory blocks left: "
+				+ memory.getNumFreeBlocks());
+
+		RM.ptp.setString(basicRMptp.getString());
+		memory.allocateNumBlocksToVM(10);
+
+		BufferedReader flash;
+		try {
+			flash = new BufferedReader(new FileReader(
+					"C:/Users/Emilis/Desktop/prog.txt"));
+			RM.ptp.setString(basicRMptp.getString());
+			Loader.loadProgram(basicRM, flash);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		RM.r1.setString(Integer.toString(15));
+
+		Processing.processCommand(Memory.getFromVirtualAddress(0));
+		Processing.processCommand(Memory.getFromVirtualAddress(2));
+
+		System.out.println("sp value: " + RM.sp);
+		System.out.println("r1 value: " + RM.r1.getString());
+		System.out.println("r2 value: " + RM.r2.getString());
+		
+		System.out.println("Basic memory:");
+		memory.printMemory(0, 40);
+
+		System.out.println("Supervisor memory:");
+		memory.printMemory(40, 50);
+
+		System.out.println("Amount of free memory blocks left: "
+				+ memory.getNumFreeBlocks());
+
+		System.out.println("0001 virtual value: "
+				+ Memory.getFromVirtualAddress(1));
+		
+//		Hdd.initFiles();
+//		Hdd.openFileForWriting(0);
+//		Hdd.writeToFile(0, "WATT");
+//		Hdd.writeToFile(0, "WATA");
+//		Hdd.writeToFile(0, "WATA");
 //		
-//		System.out.println("Basic memory:");
-//		memory.printMemory(0, 40);
-//
-//		System.out.println("Supervisor memory:");
-//		memory.printMemory(40, 50);
-//
-//		System.out.println("Amount of free memory blocks left: "
-//				+ memory.getNumFreeBlocks());
-//
-//		System.out.println("0011 virtual value: "
-//				+ memory.getFromVirtualAddress(11));
-		
-		Hdd.initFiles();
-		Hdd.openFileForWriting(0);
-		Hdd.writeToFile(0, "WATT");
-		Hdd.writeToFile(0, "WATA");
-		Hdd.writeToFile(0, "WATA");
-		
-		Hdd.seekCursor(0, 5);
-		Hdd.writeToFile(0, "WOOT");
-		Hdd.seekCursor(0, 5);
-		Hdd.closeFile(0);
-		
-		Hdd.openFileForReading(0);
-		System.out.println(Hdd.readFromFile(0));
-		
+//		Hdd.seekCursor(0, 5);
+//		Hdd.writeToFile(0, "WOOT");
+//		Hdd.seekCursor(0, 5);
+//		Hdd.closeFile(0);
+//		
+//		Hdd.openFileForReading(0);
+//		System.out.println(Hdd.readFromFile(0));
+//		
 		
 	}
 }

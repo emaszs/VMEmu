@@ -8,24 +8,24 @@ public class Processing {
 		if (cmd.matches("LR\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
 			String val = new String();
-			val = RM.memory.getFromVirtualAddress(adr);
+			val = Memory.getFromVirtualAddress(adr);
 			RM.r1.setString(val);
 		} else if (cmd.matches("SR\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
 			String val = RM.r1.getString();
-			RM.memory.writeToVirtualAddress(adr, val);
+			Memory.writeToVirtualAddress(adr, val);
 		} else if (cmd.matches("AW\\d\\d")) {
 			// TODO allocate word
 		} else if (cmd.matches("PUSR")) {
 			RM.sp = RM.sp - 1;
-			RM.memory.writeToVirtualAddress(RM.sp, RM.r1.toString());
+			Memory.writeToVirtualAddress(RM.sp, RM.r1.toString());
 		} else if (cmd.matches("POPR")) {
-			RM.r1.setString(RM.memory.getFromVirtualAddress(RM.sp));
+			RM.r1.setString(Memory.getFromVirtualAddress(RM.sp));
 			RM.sp = RM.sp + 1;
 		} else if (cmd.matches("A1\\d\\d")) {
 			System.out.println("Using addition to R1");
 			int adr = Integer.parseInt(cmd.substring(2, 4));
-			String valToAdd = RM.memory.getFromVirtualAddress(adr);
+			String valToAdd = Memory.getFromVirtualAddress(adr);
 			String valR1 = RM.r1.getString();
 
 			if (isNumeric(valToAdd) && isNumeric(valR1)) {
@@ -44,7 +44,7 @@ public class Processing {
 			}
 		} else if (cmd.matches("A2\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
-			String valToAdd = RM.memory.getFromVirtualAddress(adr);
+			String valToAdd = Memory.getFromVirtualAddress(adr);
 			String valR2 = RM.r2.getString();
 
 			if (isNumeric(valToAdd) && isNumeric(valR2)) {
@@ -63,7 +63,7 @@ public class Processing {
 			}
 		} else if (cmd.matches("S1\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
-			String valToSub = RM.memory.getFromVirtualAddress(adr);
+			String valToSub = Memory.getFromVirtualAddress(adr);
 			String valR1 = RM.r1.getString();
 
 			if (isNumeric(valToSub) && isNumeric(valR1)) {
@@ -81,7 +81,7 @@ public class Processing {
 			}
 		} else if (cmd.matches("S2\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
-			String valToSub = RM.memory.getFromVirtualAddress(adr);
+			String valToSub = Memory.getFromVirtualAddress(adr);
 			String valR2 = RM.r2.getString();
 
 			if (isNumeric(valToSub) && isNumeric(valR2)) {
@@ -99,7 +99,7 @@ public class Processing {
 			}
 		} else if (cmd.matches("ML\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2,4));
-			String valMemory = RM.memory.getFromVirtualAddress(adr);
+			String valMemory = Memory.getFromVirtualAddress(adr);
 			String valR1 = RM.r1.getString();
 			
 			if (isNumeric(valMemory) && isNumeric(valR1)) {
@@ -116,7 +116,7 @@ public class Processing {
 			}
 		} else if (cmd.matches("DV\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2,4));
-			String valMemory = RM.memory.getFromVirtualAddress(adr);
+			String valMemory = Memory.getFromVirtualAddress(adr);
 			String valR1 = RM.r1.getString();
 			
 			// Set interrupt for div by 0

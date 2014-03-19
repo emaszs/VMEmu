@@ -1,10 +1,8 @@
-import java.io.BufferedReader;
-import java.io.IOException;
 
 public class Memory {
 
-	public Word[] block = new Word[RM.BLOCK_SIZE];
-	public Block[] memory = new Block[RM.MEMORY_SIZE];
+	public static Word[] block = new Word[RM.BLOCK_SIZE];
+	public static Block[] memory = new Block[RM.MEMORY_SIZE];
 
 	// Stores information about which blocks are in use by VMs.
 	public boolean[] allocatedBlocks = new boolean[RM.MEMORY_SIZE];
@@ -143,24 +141,24 @@ public class Memory {
 		}
 	}
 
-	public String getFromRealAddress(int realAdr) {
-		return this.memory[realAdr / 10].getWord(realAdr % 10).getString();
+	public static String getFromRealAddress(int realAdr) {
+		return memory[realAdr / 10].getWord(realAdr % 10).getString();
 	}
 	
-	public String getFromVirtualAddress(int virtualAdr) {
+	public static String getFromVirtualAddress(int virtualAdr) {
 
-		int realAdr = this.translateFromVirtualToReal(virtualAdr);
-		return this.getFromRealAddress(realAdr);
+		int realAdr = translateFromVirtualToReal(virtualAdr);
+		return getFromRealAddress(realAdr);
 	}
 
-	public int translateFromVirtualToReal(int virtualAdr) {
+	public static int translateFromVirtualToReal(int virtualAdr) {
 		int realAdr = 0;
 		int virtualBlock = 0;
 		int pageAdr = 0;
 		int pageTableAdr = Integer.parseInt(RM.ptp.getString());
 
 		virtualBlock = virtualAdr / 10;
-		pageAdr = Integer.parseInt(this.memory[pageTableAdr / 10].getWord(
+		pageAdr = Integer.parseInt(memory[pageTableAdr / 10].getWord(
 				virtualBlock).getString());
 		realAdr = pageAdr + virtualAdr % 10;
 
@@ -168,27 +166,15 @@ public class Memory {
 		return realAdr;
 	}
 
-	public void writeToRealAddress(final int adr, final String val) {
-		this.memory[adr / 10].getWord(adr % 10).setString(val);
+	public static void writeToRealAddress(final int adr, final String val) {
+		memory[adr / 10].getWord(adr % 10).setString(val);
 	}
 
-	public void writeToVirtualAddress(final int virtualAdr,
+	public static void writeToVirtualAddress(final int virtualAdr,
 			final String val) {
-		int realAdr = this.translateFromVirtualToReal(virtualAdr);
-		this.writeToRealAddress(realAdr, val);
+		int realAdr = translateFromVirtualToReal(virtualAdr);
+		writeToRealAddress(realAdr, val);
 	}
 
-	public void loadProgram(final RM RM, final BufferedReader flash) {
-		int VMProgramIC = 0;
-		String line = null;
-		try {
-			while ((line = flash.readLine()) != null) {
-				this.writeToVirtualAddress(VMProgramIC, line);
-				VMProgramIC++;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 }
