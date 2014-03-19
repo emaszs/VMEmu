@@ -33,7 +33,7 @@ public class Hdd {
 	public static void openFileForReading(int fileNum) {
 		fileList[fileNum].fileIsOpenForReading = true;
 	}
-	
+
 	public static void closeFile(int fileNum) {
 		if (!fileList[fileNum].fileIsBeingWrittenTo
 				&& !fileList[fileNum].fileIsBeingWrittenTo) {

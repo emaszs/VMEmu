@@ -152,7 +152,9 @@ public class Processing {
 			// if input is just starting
 			if (RM.si[3] == '0') {
 				RM.si[3] = '1';
+
 				counter = Integer.parseInt(cmd.substring(2, 4));
+				System.out.println("Counter: " + counter);
 				RM.r2.setString(cmd.substring(2, 4));
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
@@ -162,7 +164,7 @@ public class Processing {
 						valToWrite = RM.flash.readLine();
 						Memory.writeToVirtualAddress(adrToWrite, valToWrite);
 						RM.r1.setInt(RM.r1.getInt() + 1);
-						RM.r2.setInt(counter--); // one iteration complete
+						RM.r2.setInt(counter - 1); // one iteration complete
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -180,14 +182,19 @@ public class Processing {
 						valToWrite = RM.flash.readLine();
 						Memory.writeToVirtualAddress(adrToWrite, valToWrite);
 						RM.r1.setInt(RM.r1.getInt() + 1);
-						RM.r2.setInt(counter--); // one iteration complete
+						RM.r2.setInt(counter - 1); // one iteration complete
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+
 				}
-			} else if (RM.si[3] == '1' && RM.r2.getInt() == 0) {
-				RM.si[3] = '0';
-				RM.ic++; // input complete
+				
+				// if input is finished
+				if (RM.si[3] == '1' && RM.r2.getInt() == 0) {
+					RM.si[3] = '0';
+					// RM.r2.setInt(RM.r2.getInt() - 1);
+					RM.ic++; // input complete
+				}
 			}
 			// TODO
 		} else if (cmd.matches("FOW\\d")) { // open file for writing

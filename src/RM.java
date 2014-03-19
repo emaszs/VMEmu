@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 public final class RM {
 	public static final int WORD_SIZE = 4;
@@ -17,10 +18,10 @@ public final class RM {
 	public static int sp = 0; // stack pointer
 	public static char mode = '0'; // 0 - user, 1 - supervisor
 	public static char pi = '0'; // program interrupts
-	public static char[] si = {'0', '0', '0', '0'}; // supervisor interrupts
+	public static char[] si = { '0', '0', '0', '0' }; // supervisor interrupts
 	public static int t = 0; // timer
 	public static int chst1, chst2, chst3 = 0; //
-	
+
 	public static BufferedReader flash;
 
 	public static void main(final String[] args) {
@@ -45,18 +46,18 @@ public final class RM {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		//RM.r1.setString(Integer.toString(15));
+		// RM.r1.setString(Integer.toString(15));
 
 		Processing.processCommand(Memory.getFromVirtualAddress(0));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
+		
 
-		System.out.println("sp value: " + RM.sp);
 		System.out.println("r1 value: " + RM.r1.getString());
 		System.out.println("r2 value: " + RM.r2.getString());
 		System.out.println("ic value: " + RM.ic);
-		
+
 		System.out.println("Basic memory:");
 		memory.printMemory(0, 40);
 
@@ -68,21 +69,28 @@ public final class RM {
 
 		System.out.println("0001 virtual value: "
 				+ Memory.getFromVirtualAddress(1));
-		
-//		Hdd.initFiles();
-//		Hdd.openFileForWriting(0);
-//		Hdd.writeToFile(0, "WATT");
-//		Hdd.writeToFile(0, "WATA");
-//		Hdd.writeToFile(0, "WATA");
-//		
-//		Hdd.seekCursor(0, 5);
-//		Hdd.writeToFile(0, "WOOT");
-//		Hdd.seekCursor(0, 5);
-//		Hdd.closeFile(0);
-//		
-//		Hdd.openFileForReading(0);
-//		System.out.println(Hdd.readFromFile(0));
-//		
-		
+
+		try {
+			flash.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Hdd.initFiles();
+		// Hdd.openFileForWriting(0);
+		// Hdd.writeToFile(0, "WATT");
+		// Hdd.writeToFile(0, "WATA");
+		// Hdd.writeToFile(0, "WATA");
+		//
+		// Hdd.seekCursor(0, 5);
+		// Hdd.writeToFile(0, "WOOT");
+		// Hdd.seekCursor(0, 5);
+		// Hdd.closeFile(0);
+		//
+		// Hdd.openFileForReading(0);
+		// System.out.println(Hdd.readFromFile(0));
+		//
+
 	}
 }
