@@ -21,7 +21,7 @@ public final class RM {
 	public static char pi = '0'; // program interrupts
 	public static char[] si = { '0', '0', '0', '0' }; // supervisor interrupts
 	public static int t = 0; // timer
-	public static int chst1, chst2, chst3 = 0; //
+	public static int chstPrinter = 0, chstFlash = 0, chstHdd = 0; // channel status. 1 - in use
 
 	public static BufferedReader flash;
 	public static BufferedWriter printer;
@@ -43,20 +43,23 @@ public final class RM {
 
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/Emilis/Desktop/prog.txt"));
+					"C:/Users/user/Desktop/prog.txt"));
 			Loader.loadProgram(basicRM, flash);
-			printer = new BufferedWriter(new FileWriter("C:/Users/Emilis/Desktop/print.txt"));
+			printer = new BufferedWriter(new FileWriter(
+					"C:/Users/user/Desktop/print.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		// RM.r1.setString(Integer.toString(15));
-		
+
 		Hdd.initFiles();
 		Hdd.openFileForReading(0);
-		
+
 		Processing.processCommand(Memory.getFromVirtualAddress(0));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
+		// clearing interrupts after IO
+		RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 
 		System.out.println("r1 value: " + RM.r1.getString());
 		System.out.println("r2 value: " + RM.r2.getString());

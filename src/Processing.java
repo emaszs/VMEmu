@@ -146,10 +146,12 @@ public class Processing {
 			}
 		} else if (cmd.matches("OU\\d\\d")) { // output to printer
 			int counter = 0;
+			RM.si[2] = '1';
+			RM.chstPrinter = 1;
 
 			// if output is just starting
-			if (RM.si[2] == '0') {
-				RM.si[2] = '1';
+			if (RM.chstPrinter == 0) {
+				RM.chstPrinter = 1;
 
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
@@ -168,7 +170,7 @@ public class Processing {
 				}
 			}
 			// if output continued
-			else if (RM.si[2] == '1'
+			else if (RM.chstPrinter  == 1
 					&& Integer.parseInt(RM.r2.getString()) != 0) {
 				counter = RM.r2.getInt();
 
@@ -187,8 +189,8 @@ public class Processing {
 				}
 				
 				// if output is finished
-				if (RM.si[2] == '1' && RM.r2.getInt() == 0) {
-					RM.si[2] = '0';
+				if (RM.chstPrinter  == 1 && RM.r2.getInt() == 0) {
+					RM.chstPrinter  = 0;
 					RM.ic++; // input complete
 				}
 			}
@@ -196,9 +198,10 @@ public class Processing {
 			int counter = 0;
 
 			// if input is just starting
-			if (RM.si[3] == '0') {
+			if (RM.chstFlash == 0) {
+				RM.chstFlash = 1;
 				RM.si[3] = '1';
-
+				
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
@@ -216,7 +219,7 @@ public class Processing {
 				}
 			}
 			// if input continued
-			else if (RM.si[3] == '1'
+			else if (RM.chstFlash == 1
 					&& Integer.parseInt(RM.r2.getString()) != 0) {
 				counter = RM.r2.getInt();
 
@@ -235,8 +238,8 @@ public class Processing {
 				}
 				
 				// if input is finished
-				if (RM.si[3] == '1' && RM.r2.getInt() == 0) {
-					RM.si[3] = '0';
+				if (RM.chstFlash == 1 && RM.r2.getInt() == 0) {
+					RM.chstFlash = 0;
 					RM.ic++; // input complete
 				}
 			}
@@ -255,14 +258,56 @@ public class Processing {
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2
 			// TODO
+			int counter = 0;
+			int fileNum = Integer.parseInt(cmd.substring(1, 2));
+			// if input is just starting
+			if (RM.chstHdd == 0) {
+				RM.chstHdd = 1;
+				RM.si[0] = '1';
+				
+				counter = Integer.parseInt(cmd.substring(2, 4));
+				RM.r2.setString(cmd.substring(2, 4));
+
+				if (isNumeric(RM.r1.getString()) && counter != 0) {
+					int adrToReadFrom = Integer.parseInt(RM.r1.getString());
+					String valToWrite;
+					valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
+					Hdd.writeToFile(fileNum, valToWrite);
+					RM.r1.setInt(RM.r1.getInt() + 1);
+					RM.r2.setInt(counter - 1); // one iteration complete
+				}
+			}
+			// if input continued
+			else if (RM.chstHdd == 1
+					&& Integer.parseInt(RM.r2.getString()) != 0) {
+				counter = RM.r2.getInt();
+
+				if (isNumeric(RM.r1.getString()) && counter != 0) {
+					int adrToReadFrom = Integer.parseInt(RM.r1.getString());
+					String valToWrite;
+					valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
+					Hdd.writeToFile(fileNum, valToWrite);
+					RM.r1.setInt(RM.r1.getInt() + 1);
+					RM.r2.setInt(counter - 1); // one iteration complete
+				}
+				
+				// if input is finished
+				if (RM.chstHdd == 1 && RM.r2.getInt() == 0) {
+					RM.chstHdd = 0;
+					RM.ic++; // input complete
+				}
+			}
+			
+			// TODO
 		} else if (cmd.matches("R\\d\\d\\d")) { // read from file n XY lines to
 			// TODO									// address R1, counter in R2
 			int counter = 0;
 			int fileNum = Integer.parseInt(cmd.substring(1, 2));
 			// if input is just starting
-			if (RM.si[1] == '0') {
+			if (RM.chstHdd == 0) {
+				RM.chstHdd = 1;
 				RM.si[1] = '1';
-
+				
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
@@ -276,7 +321,7 @@ public class Processing {
 				}
 			}
 			// if input continued
-			else if (RM.si[1] == '1'
+			else if (RM.chstHdd == 1
 					&& Integer.parseInt(RM.r2.getString()) != 0) {
 				counter = RM.r2.getInt();
 
@@ -290,8 +335,8 @@ public class Processing {
 				}
 				
 				// if input is finished
-				if (RM.si[1] == '1' && RM.r2.getInt() == 0) {
-					RM.si[1] = '0';
+				if (RM.chstHdd == 1 && RM.r2.getInt() == 0) {
+					RM.chstHdd = 0;
 					RM.ic++; // input complete
 				}
 			}
