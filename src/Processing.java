@@ -185,7 +185,6 @@ public class Processing {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
 				}
 				
 				// if output is finished
@@ -234,9 +233,7 @@ public class Processing {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
 				}
-				
 				// if input is finished
 				if (RM.chstFlash == 1 && RM.r2.getInt() == 0) {
 					RM.chstFlash = 0;
@@ -254,6 +251,10 @@ public class Processing {
 		} else if (cmd.matches("FCL\\d")) { // close file
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.closeFile(fileNum);
+			RM.ic++;
+		} else if (cmd.matches("FS\\d\\d")) {
+			int fileNum = Integer.parseInt(cmd.substring(3, 4));
+			Hdd.seekCursor(fileNum, Integer.parseInt(cmd.substring(2, 4)));
 			RM.ic++;
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2

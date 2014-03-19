@@ -59,6 +59,7 @@ public final class RM {
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		Processing.processCommand(Memory.getFromVirtualAddress(2));
 		Processing.processCommand(Memory.getFromVirtualAddress(2));
+		
 		// clearing interrupts after IO
 		RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 
