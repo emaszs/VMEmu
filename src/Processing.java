@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class Processing {
-	public static void processCommand(String cmd) {
+	public static void processCommand(String cmd){
 		// String cmd = wordCmd.getString();
 		if (cmd.length() > RM.WORD_SIZE) {
 			cmd = cmd.substring(0, RM.WORD_SIZE);
@@ -145,7 +145,6 @@ public class Processing {
 				RM.ic++;
 			}
 		} else if (cmd.matches("OU\\d\\d")) { // output to printer
-			// TODO
 			int counter = 0;
 
 			// if output is just starting
@@ -193,7 +192,6 @@ public class Processing {
 					RM.ic++; // input complete
 				}
 			}
-			// TODO
 		} else if (cmd.matches("IN\\d\\d")) { // input from flash
 			int counter = 0;
 
@@ -243,17 +241,66 @@ public class Processing {
 				}
 			}
 		} else if (cmd.matches("FOW\\d")) { // open file for writing
-			// TODO
+			int fileNum = Integer.parseInt(cmd.substring(3, 4));
+			Hdd.openFileForWriting(fileNum);
+			RM.ic++;
 		} else if (cmd.matches("FOR\\d")) { // open file for reading
-			// TODO
+			int fileNum = Integer.parseInt(cmd.substring(3, 4));
+			Hdd.openFileForReading(fileNum);
+			RM.ic++;
 		} else if (cmd.matches("FCL\\d")) { // close file
-			// TODO
-		} else if (cmd.matches("FW\\d\\d")) { // write to file XY lines from
+			int fileNum = Integer.parseInt(cmd.substring(3, 4));
+			Hdd.closeFile(fileNum);
+			RM.ic++;
+		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2
+			// TODO
+		} else if (cmd.matches("R\\d\\d\\d")) { // read from file n XY lines to
+			// TODO									// address R1, counter in R2
+			int counter = 0;
+			int fileNum = Integer.parseInt(cmd.substring(1, 2));
+			// if input is just starting
+			if (RM.si[1] == '0') {
+				RM.si[1] = '1';
 
-		} else if (cmd.matches("FR\\d\\d")) { // read from file XY lines to
-												// address R1, counter in R2
+				counter = Integer.parseInt(cmd.substring(2, 4));
+				RM.r2.setString(cmd.substring(2, 4));
+
+				if (isNumeric(RM.r1.getString()) && counter != 0) {
+					int adrToWrite = Integer.parseInt(RM.r1.getString());
+					String valToWrite;
+					valToWrite = Hdd.readFromFile(fileNum);
+					Memory.writeToVirtualAddress(adrToWrite, valToWrite);
+					RM.r1.setInt(RM.r1.getInt() + 1);
+					RM.r2.setInt(counter - 1); // one iteration complete
+				}
+			}
+			// if input continued
+			else if (RM.si[1] == '1'
+					&& Integer.parseInt(RM.r2.getString()) != 0) {
+				counter = RM.r2.getInt();
+
+				if (isNumeric(RM.r1.getString()) && counter != 0) {
+					int adrToWrite = Integer.parseInt(RM.r1.getString());
+					String valToWrite;
+					valToWrite = Hdd.readFromFile(fileNum);
+					Memory.writeToVirtualAddress(adrToWrite, valToWrite);
+					RM.r1.setInt(RM.r1.getInt() + 1);
+					RM.r2.setInt(counter - 1); // one iteration complete
+				}
+				
+				// if input is finished
+				if (RM.si[1] == '1' && RM.r2.getInt() == 0) {
+					RM.si[1] = '0';
+					RM.ic++; // input complete
+				}
+			}
+			
 			// TODO
+		} else if (cmd.matches("HALT")) {
+			for (int i = 0; i < RM.si.length; i++) {
+				RM.si[i] = '9';
+			}
 		}
 
 	}

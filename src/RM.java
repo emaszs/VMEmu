@@ -50,15 +50,13 @@ public final class RM {
 			e.printStackTrace();
 		}
 		// RM.r1.setString(Integer.toString(15));
-
+		
+		Hdd.initFiles();
+		Hdd.openFileForReading(0);
+		
 		Processing.processCommand(Memory.getFromVirtualAddress(0));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
-		Processing.processCommand(Memory.getFromVirtualAddress(1));
-		
-		Processing.processCommand(Memory.getFromVirtualAddress(2));
-		Processing.processCommand(Memory.getFromVirtualAddress(3));
-		Processing.processCommand(Memory.getFromVirtualAddress(3));
 
 		System.out.println("r1 value: " + RM.r1.getString());
 		System.out.println("r2 value: " + RM.r2.getString());
@@ -80,7 +78,6 @@ public final class RM {
 			flash.close();
 			printer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
