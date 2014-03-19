@@ -24,6 +24,10 @@ public class Loader {
 					line = flash.readLine(); // Skip DSOV line
 				}
 				
+				if (line != null && line.matches("\\$END")) {
+					break;
+				}
+				
 				/*
 				 * Checking once more if line isn't empty
 				 * Required if Data Segment is at the end of the input flash drive.
@@ -34,7 +38,6 @@ public class Loader {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

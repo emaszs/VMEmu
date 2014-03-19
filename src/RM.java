@@ -17,9 +17,11 @@ public final class RM {
 	public static int sp = 0; // stack pointer
 	public static char mode = '0'; // 0 - user, 1 - supervisor
 	public static char pi = '0'; // program interrupts
-	public static char si = '0'; // supervisor interrupts
+	public static char[] si = {'0', '0', '0', '0'}; // supervisor interrupts
 	public static int t = 0; // timer
 	public static int chst1, chst2, chst3 = 0; //
+	
+	public static BufferedReader flash;
 
 	public static void main(final String[] args) {
 		RM basicRM = new RM();
@@ -29,34 +31,31 @@ public final class RM {
 		memory.initAllocationInfo();
 
 		memory.allocatePageTableToVM();
-		Word basicRMptp = new Word();
-		basicRMptp.setString(RM.ptp.getString());
 
 		memory.initSupervisorAllocationInfo();
 		System.out.println("Amount of free memory blocks left: "
 				+ memory.getNumFreeBlocks());
 
-		RM.ptp.setString(basicRMptp.getString());
 		memory.allocateNumBlocksToVM(10);
 
-		BufferedReader flash;
 		try {
 			flash = new BufferedReader(new FileReader(
 					"C:/Users/Emilis/Desktop/prog.txt"));
-			RM.ptp.setString(basicRMptp.getString());
 			Loader.loadProgram(basicRM, flash);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RM.r1.setString(Integer.toString(15));
+		//RM.r1.setString(Integer.toString(15));
 
 		Processing.processCommand(Memory.getFromVirtualAddress(0));
-		Processing.processCommand(Memory.getFromVirtualAddress(2));
+		Processing.processCommand(Memory.getFromVirtualAddress(1));
+		Processing.processCommand(Memory.getFromVirtualAddress(1));
+		Processing.processCommand(Memory.getFromVirtualAddress(1));
 
 		System.out.println("sp value: " + RM.sp);
 		System.out.println("r1 value: " + RM.r1.getString());
 		System.out.println("r2 value: " + RM.r2.getString());
+		System.out.println("ic value: " + RM.ic);
 		
 		System.out.println("Basic memory:");
 		memory.printMemory(0, 40);

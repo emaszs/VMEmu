@@ -120,7 +120,6 @@ public class Memory {
 			pageTableCounter++;
 			numSuccAllocated++;
 			
-			// TODO init stackpointer
 			RM.sp = 99;
 		}
 	}
@@ -162,7 +161,6 @@ public class Memory {
 				virtualBlock).getString());
 		realAdr = pageAdr + virtualAdr % 10;
 
-		// TODO
 		return realAdr;
 	}
 

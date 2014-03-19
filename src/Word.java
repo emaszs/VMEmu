@@ -5,7 +5,7 @@ public class Word {
 		return word.charAt(idx);
 	}
 
-	// Unfinished - TODO if needed
+	// Unfinished 
 	// public void setChar(final int idx, final char val) {
 	// String temp = new String();
 	// temp = this.word;
@@ -29,6 +29,13 @@ public class Word {
 		else {
 			this.word = val;
 		}
+	}
+	
+	public void setInt(int val) {
+		setString(Integer.toString(val));
+	}
+	public int getInt() {
+		return Integer.parseInt(this.word);
 	}
 	
 	public String toString() {
