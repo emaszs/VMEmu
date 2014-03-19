@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public final class RM {
@@ -23,6 +24,7 @@ public final class RM {
 	public static int chst1, chst2, chst3 = 0; //
 
 	public static BufferedReader flash;
+	public static BufferedWriter printer;
 
 	public static void main(final String[] args) {
 		RM basicRM = new RM();
@@ -43,7 +45,8 @@ public final class RM {
 			flash = new BufferedReader(new FileReader(
 					"C:/Users/Emilis/Desktop/prog.txt"));
 			Loader.loadProgram(basicRM, flash);
-		} catch (FileNotFoundException e) {
+			printer = new BufferedWriter(new FileWriter("C:/Users/Emilis/Desktop/print.txt"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		// RM.r1.setString(Integer.toString(15));
@@ -53,6 +56,9 @@ public final class RM {
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
 		
+		Processing.processCommand(Memory.getFromVirtualAddress(2));
+		Processing.processCommand(Memory.getFromVirtualAddress(3));
+		Processing.processCommand(Memory.getFromVirtualAddress(3));
 
 		System.out.println("r1 value: " + RM.r1.getString());
 		System.out.println("r2 value: " + RM.r2.getString());
@@ -72,6 +78,7 @@ public final class RM {
 
 		try {
 			flash.close();
+			printer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

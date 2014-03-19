@@ -146,6 +146,54 @@ public class Processing {
 			}
 		} else if (cmd.matches("OU\\d\\d")) { // output to printer
 			// TODO
+			int counter = 0;
+
+			// if output is just starting
+			if (RM.si[2] == '0') {
+				RM.si[2] = '1';
+
+				counter = Integer.parseInt(cmd.substring(2, 4));
+				RM.r2.setString(cmd.substring(2, 4));
+
+				if (isNumeric(RM.r1.getString()) && counter != 0) {
+					int adrToWriteFrom = RM.r1.getInt();
+					String valToWrite;
+					try {
+						valToWrite = Memory.getFromVirtualAddress(adrToWriteFrom);
+						RM.printer.write(valToWrite + "\n");
+						RM.r1.setInt(RM.r1.getInt() + 1);
+						RM.r2.setInt(counter - 1); // one iteration complete
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			// if output continued
+			else if (RM.si[2] == '1'
+					&& Integer.parseInt(RM.r2.getString()) != 0) {
+				counter = RM.r2.getInt();
+
+				if (isNumeric(RM.r1.getString()) && counter != 0) {
+					int adrToWriteFrom = RM.r1.getInt();
+					String valToWrite;
+					try {
+						valToWrite = Memory.getFromVirtualAddress(adrToWriteFrom);
+						RM.printer.write(valToWrite + "\n");
+						RM.r1.setInt(RM.r1.getInt() + 1);
+						RM.r2.setInt(counter - 1); // one iteration complete
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+				
+				// if output is finished
+				if (RM.si[2] == '1' && RM.r2.getInt() == 0) {
+					RM.si[2] = '0';
+					RM.ic++; // input complete
+				}
+			}
+			// TODO
 		} else if (cmd.matches("IN\\d\\d")) { // input from flash
 			int counter = 0;
 
@@ -154,7 +202,6 @@ public class Processing {
 				RM.si[3] = '1';
 
 				counter = Integer.parseInt(cmd.substring(2, 4));
-				System.out.println("Counter: " + counter);
 				RM.r2.setString(cmd.substring(2, 4));
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
@@ -192,11 +239,9 @@ public class Processing {
 				// if input is finished
 				if (RM.si[3] == '1' && RM.r2.getInt() == 0) {
 					RM.si[3] = '0';
-					// RM.r2.setInt(RM.r2.getInt() - 1);
 					RM.ic++; // input complete
 				}
 			}
-			// TODO
 		} else if (cmd.matches("FOW\\d")) { // open file for writing
 			// TODO
 		} else if (cmd.matches("FOR\\d")) { // open file for reading
