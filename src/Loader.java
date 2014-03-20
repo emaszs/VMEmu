@@ -5,7 +5,8 @@ public class Loader {
 	public static String[] cmdRegexes = { "LR\\d{2}", "SR\\d{2}", "PUSR",
 			"POPR", "A1\\d{2}", "A2\\d{2}", "S1\\d{2}", "S2\\d{2}", "ML\\d{2}",
 			"DV\\d{2}", "OU\\d{2}", "IN\\d{2}", "FOW\\d", "FOR\\d", "FCL\\d",
-			"FS\\d{2}", "W\\d{3}", "R\\d{3}", "HALT", "DS\\d{2}", "\\$STR", "\\$END" };
+			"FS\\d{2}", "W\\d{3}", "R\\d{3}", "HALT", "DS\\d{2}", "\\$STR",
+			"\\$END" };
 
 	public static boolean isLegal(String cmd) {
 		boolean matches = false;
@@ -17,7 +18,8 @@ public class Loader {
 		return matches;
 	}
 
-	public static void loadProgram(final RM RM, final BufferedReader flash) {
+	public static boolean loadProgram(final BufferedReader flash) {
+		boolean loadSuccessful = false;
 		int VMProgramIC = 0;
 		String line = null;
 		try {
@@ -40,13 +42,15 @@ public class Loader {
 						}
 						line = flash.readLine(); // Skip DSOV line
 					}
+					
 					if (line != null && line.matches("\\$STR")) {
 						line = flash.readLine();
-					}
+					} 
+					
 					if (line != null && line.matches("\\$END")) {
+						loadSuccessful = true;
 						break;
 					}
-
 					/*
 					 * Checking once more if line isn't empty Required if Data
 					 * Segment is at the end of the input flash drive.
@@ -55,10 +59,15 @@ public class Loader {
 						Memory.writeToVirtualAddress(VMProgramIC, line);
 						VMProgramIC++;
 					}
+				} else {
+					System.out.println("Illegal syntax found! stopping loading.");
+					System.out.println(line);
+					break;
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return loadSuccessful;
 	}
 }

@@ -21,13 +21,14 @@ public final class RM {
 	public static char pi = '0'; // program interrupts
 	public static char[] si = { '0', '0', '0', '0' }; // supervisor interrupts
 	public static int t = 0; // timer
-	public static int chstPrinter = 0, chstFlash = 0, chstHdd = 0; // channel status. 1 - in use
+	public static int chstPrinter = 0, chstFlash = 0, chstHdd = 0; // channel
+																	// status. 1
+																	// - in use
 
 	public static BufferedReader flash;
 	public static BufferedWriter printer;
 
 	public static void main(final String[] args) {
-		RM basicRM = new RM();
 
 		memory.initMemory();
 
@@ -41,10 +42,11 @@ public final class RM {
 
 		memory.allocateNumBlocksToVM(10);
 
+		boolean loaded = false;
 		try {
 			flash = new BufferedReader(new FileReader(
 					"C:/Users/Emilis/Desktop/prog.txt"));
-			Loader.loadProgram(basicRM, flash);
+			loaded = Loader.loadProgram(flash);
 			printer = new BufferedWriter(new FileWriter(
 					"C:/Users/Emilis/Desktop/print.txt"));
 		} catch (IOException e) {
@@ -52,54 +54,56 @@ public final class RM {
 		}
 		// RM.r1.setString(Integer.toString(15));
 
-		Hdd.initFiles();
-		Hdd.openFileForReading(0);
+		if (loaded) {
 
-		Processing.processCommand(Memory.getFromVirtualAddress(0));
-		Processing.processCommand(Memory.getFromVirtualAddress(1));
-		Processing.processCommand(Memory.getFromVirtualAddress(1));
-		
-		
-		// clearing interrupts after IO
-		RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
+			Hdd.initFiles();
+			Hdd.openFileForReading(0);
 
-		System.out.println("r1 value: " + RM.r1.getString());
-		System.out.println("r2 value: " + RM.r2.getString());
-		System.out.println("ic value: " + RM.ic);
+			Processing.processCommand(Memory.getFromVirtualAddress(0));
+			Processing.processCommand(Memory.getFromVirtualAddress(1));
+			Processing.processCommand(Memory.getFromVirtualAddress(2));
+			Processing.processCommand(Memory.getFromVirtualAddress(2));
 
-		System.out.println("Basic memory:");
-		memory.printMemory(0, 40);
+			// clearing interrupts after IO
+			RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 
-		System.out.println("Supervisor memory:");
-		memory.printMemory(40, 50);
+			System.out.println("r1 value: " + RM.r1.getString());
+			System.out.println("r2 value: " + RM.r2.getString());
+			System.out.println("ic value: " + RM.ic);
 
-		System.out.println("Amount of free memory blocks left: "
-				+ memory.getNumFreeBlocks());
+			System.out.println("Basic memory:");
+			memory.printMemory(0, 40);
 
-		System.out.println("0001 virtual value: "
-				+ Memory.getFromVirtualAddress(1));
+			System.out.println("Supervisor memory:");
+			memory.printMemory(40, 50);
 
-		try {
-			flash.close();
-			printer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Amount of free memory blocks left: "
+					+ memory.getNumFreeBlocks());
+
+			System.out.println("0001 virtual value: "
+					+ Memory.getFromVirtualAddress(1));
+
+			try {
+				flash.close();
+				printer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			// Hdd.initFiles();
+			// Hdd.openFileForWriting(0);
+			// Hdd.writeToFile(0, "WATT");
+			// Hdd.writeToFile(0, "WATA");
+			// Hdd.writeToFile(0, "WATA");
+			//
+			// Hdd.seekCursor(0, 5);
+			// Hdd.writeToFile(0, "WOOT");
+			// Hdd.seekCursor(0, 5);
+			// Hdd.closeFile(0);
+			//
+			// Hdd.openFileForReading(0);
+			// System.out.println(Hdd.readFromFile(0));
+			//
 		}
-
-		// Hdd.initFiles();
-		// Hdd.openFileForWriting(0);
-		// Hdd.writeToFile(0, "WATT");
-		// Hdd.writeToFile(0, "WATA");
-		// Hdd.writeToFile(0, "WATA");
-		//
-		// Hdd.seekCursor(0, 5);
-		// Hdd.writeToFile(0, "WOOT");
-		// Hdd.seekCursor(0, 5);
-		// Hdd.closeFile(0);
-		//
-		// Hdd.openFileForReading(0);
-		// System.out.println(Hdd.readFromFile(0));
-		//
-
 	}
 }
