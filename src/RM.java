@@ -60,10 +60,11 @@ public final class RM {
 			Hdd.openFileForReading(0);
 
 			Processing.processCommand(Memory.getFromVirtualAddress(0));
+			System.out.println("r2 value: " + RM.r2.getString());
 			Processing.processCommand(Memory.getFromVirtualAddress(1));
-			Processing.processCommand(Memory.getFromVirtualAddress(2));
-			Processing.processCommand(Memory.getFromVirtualAddress(2));
-
+			System.out.println("r2 value: " + RM.r2.getString());
+			Processing.processCommand(Memory.getFromVirtualAddress(1));
+			System.out.println("r2 value: " + RM.r2.getString());
 			// clearing interrupts after IO
 			RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 

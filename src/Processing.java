@@ -147,7 +147,6 @@ public class Processing {
 		} else if (cmd.matches("OU\\d\\d")) { // output to printer
 			int counter = 0;
 			RM.si[2] = '1';
-			RM.chstPrinter = 1;
 
 			// if output is just starting
 			if (RM.chstPrinter == 0) {
