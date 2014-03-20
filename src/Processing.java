@@ -258,7 +258,6 @@ public class Processing {
 			RM.ic++;
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2
-			// TODO
 			int counter = 0;
 			int fileNum = Integer.parseInt(cmd.substring(1, 2));
 			// if input is just starting
@@ -299,9 +298,7 @@ public class Processing {
 				}
 			}
 			
-			// TODO
 		} else if (cmd.matches("R\\d\\d\\d")) { // read from file n XY lines to
-			// TODO									// address R1, counter in R2
 			int counter = 0;
 			int fileNum = Integer.parseInt(cmd.substring(1, 2));
 			// if input is just starting
@@ -342,7 +339,6 @@ public class Processing {
 				}
 			}
 			
-			// TODO
 		} else if (cmd.matches("HALT")) {
 			for (int i = 0; i < RM.si.length; i++) {
 				RM.si[i] = '9';

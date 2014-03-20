@@ -43,10 +43,10 @@ public final class RM {
 
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/user/Desktop/prog.txt"));
+					"C:/Users/Emilis/Desktop/prog.txt"));
 			Loader.loadProgram(basicRM, flash);
 			printer = new BufferedWriter(new FileWriter(
-					"C:/Users/user/Desktop/print.txt"));
+					"C:/Users/Emilis/Desktop/print.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,8 +57,8 @@ public final class RM {
 
 		Processing.processCommand(Memory.getFromVirtualAddress(0));
 		Processing.processCommand(Memory.getFromVirtualAddress(1));
-		Processing.processCommand(Memory.getFromVirtualAddress(2));
-		Processing.processCommand(Memory.getFromVirtualAddress(2));
+		Processing.processCommand(Memory.getFromVirtualAddress(1));
+		
 		
 		// clearing interrupts after IO
 		RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
