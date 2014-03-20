@@ -60,11 +60,17 @@ public final class RM {
 			Hdd.openFileForReading(0);
 
 			Processing.processCommand(Memory.getFromVirtualAddress(0));
-			System.out.println("r2 value: " + RM.r2.getString());
 			Processing.processCommand(Memory.getFromVirtualAddress(1));
-			System.out.println("r2 value: " + RM.r2.getString());
+			RM.mode = '1'; // elevated mode for input
 			Processing.processCommand(Memory.getFromVirtualAddress(1));
-			System.out.println("r2 value: " + RM.r2.getString());
+			Processing.processCommand(Memory.getFromVirtualAddress(1));
+			RM.mode = '0'; // input done
+		
+			Processing.processCommand(Memory.getFromVirtualAddress(2));
+			
+			RM.mode = '1'; // elevated mode for input
+			Processing.processCommand(Memory.getFromVirtualAddress(3));
+			Processing.processCommand(Memory.getFromVirtualAddress(3));
 			// clearing interrupts after IO
 			RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 

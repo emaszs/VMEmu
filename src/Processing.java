@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class Processing {
-	public static void processCommand(String cmd){
+	public static void processCommand(String cmd) {
 		// String cmd = wordCmd.getString();
 		if (cmd.length() > RM.WORD_SIZE) {
 			cmd = cmd.substring(0, RM.WORD_SIZE);
@@ -155,29 +155,31 @@ public class Processing {
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToWriteFrom = RM.r1.getInt();
-					String valToWrite;
-					try {
-						valToWrite = Memory.getFromVirtualAddress(adrToWriteFrom);
-						RM.printer.write(valToWrite + "\n");
-						RM.r1.setInt(RM.r1.getInt() + 1);
-						RM.r2.setInt(counter - 1); // one iteration complete
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
+				// if (isNumeric(RM.r1.getString()) && counter != 0) {
+				// int adrToWriteFrom = RM.r1.getInt();
+				// String valToWrite;
+				// try {
+				// valToWrite = Memory.getFromVirtualAddress(adrToWriteFrom);
+				// RM.printer.write(valToWrite + "\n");
+				// RM.r1.setInt(RM.r1.getInt() + 1);
+				// RM.r2.setInt(counter - 1); // one iteration complete
+				// } catch (IOException e) {
+				// e.printStackTrace();
+				// }
+				// }
 			}
 			// if output continued
-			else if (RM.chstPrinter  == 1
-					&& Integer.parseInt(RM.r2.getString()) != 0) {
+			else if (RM.chstPrinter == 1
+					&& Integer.parseInt(RM.r2.getString()) != 0
+					&& RM.mode == '1') {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
 					int adrToWriteFrom = RM.r1.getInt();
 					String valToWrite;
 					try {
-						valToWrite = Memory.getFromVirtualAddress(adrToWriteFrom);
+						valToWrite = Memory
+								.getFromVirtualAddress(adrToWriteFrom);
 						RM.printer.write(valToWrite + "\n");
 						RM.r1.setInt(RM.r1.getInt() + 1);
 						RM.r2.setInt(counter - 1); // one iteration complete
@@ -185,10 +187,10 @@ public class Processing {
 						e.printStackTrace();
 					}
 				}
-				
+
 				// if output is finished
-				if (RM.chstPrinter  == 1 && RM.r2.getInt() == 0) {
-					RM.chstPrinter  = 0;
+				if (RM.chstPrinter == 1 && RM.r2.getInt() == 0) {
+					RM.chstPrinter = 0;
 					RM.ic++; // input complete
 				}
 			}
@@ -199,26 +201,27 @@ public class Processing {
 			if (RM.chstFlash == 0) {
 				RM.chstFlash = 1;
 				RM.si[3] = '1';
-				
+
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToWrite = Integer.parseInt(RM.r1.getString());
-					String valToWrite;
-					try {
-						valToWrite = RM.flash.readLine();
-						Memory.writeToVirtualAddress(adrToWrite, valToWrite);
-						RM.r1.setInt(RM.r1.getInt() + 1);
-						RM.r2.setInt(counter - 1); // one iteration complete
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
+				// if (isNumeric(RM.r1.getString()) && counter != 0) {
+				// int adrToWrite = Integer.parseInt(RM.r1.getString());
+				// String valToWrite;
+				// try {
+				// valToWrite = RM.flash.readLine();
+				// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
+				// RM.r1.setInt(RM.r1.getInt() + 1);
+				// RM.r2.setInt(counter - 1); // one iteration complete
+				// } catch (IOException e) {
+				// e.printStackTrace();
+				// }
+				// }
 			}
 			// if input continued
 			else if (RM.chstFlash == 1
-					&& Integer.parseInt(RM.r2.getString()) != 0) {
+					&& Integer.parseInt(RM.r2.getString()) != 0
+					&& RM.mode == '1') {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
@@ -263,22 +266,23 @@ public class Processing {
 			if (RM.chstHdd == 0) {
 				RM.chstHdd = 1;
 				RM.si[0] = '1';
-				
+
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToReadFrom = Integer.parseInt(RM.r1.getString());
-					String valToWrite;
-					valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
-					Hdd.writeToFile(fileNum, valToWrite);
-					RM.r1.setInt(RM.r1.getInt() + 1);
-					RM.r2.setInt(counter - 1); // one iteration complete
-				}
+				// if (isNumeric(RM.r1.getString()) && counter != 0) {
+				// int adrToReadFrom = Integer.parseInt(RM.r1.getString());
+				// String valToWrite;
+				// valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
+				// Hdd.writeToFile(fileNum, valToWrite);
+				// RM.r1.setInt(RM.r1.getInt() + 1);
+				// RM.r2.setInt(counter - 1); // one iteration complete
+				// }
 			}
 			// if input continued
 			else if (RM.chstHdd == 1
-					&& Integer.parseInt(RM.r2.getString()) != 0) {
+					&& Integer.parseInt(RM.r2.getString()) != 0
+					&& RM.mode == '1') {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
@@ -289,14 +293,14 @@ public class Processing {
 					RM.r1.setInt(RM.r1.getInt() + 1);
 					RM.r2.setInt(counter - 1); // one iteration complete
 				}
-				
+
 				// if input is finished
 				if (RM.chstHdd == 1 && RM.r2.getInt() == 0) {
 					RM.chstHdd = 0;
 					RM.ic++; // input complete
 				}
 			}
-			
+
 		} else if (cmd.matches("R\\d\\d\\d")) { // read from file n XY lines to
 			int counter = 0;
 			int fileNum = Integer.parseInt(cmd.substring(1, 2));
@@ -304,22 +308,23 @@ public class Processing {
 			if (RM.chstHdd == 0) {
 				RM.chstHdd = 1;
 				RM.si[1] = '1';
-				
+
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToWrite = Integer.parseInt(RM.r1.getString());
-					String valToWrite;
-					valToWrite = Hdd.readFromFile(fileNum);
-					Memory.writeToVirtualAddress(adrToWrite, valToWrite);
-					RM.r1.setInt(RM.r1.getInt() + 1);
-					RM.r2.setInt(counter - 1); // one iteration complete
-				}
+				// if (isNumeric(RM.r1.getString()) && counter != 0) {
+				// int adrToWrite = Integer.parseInt(RM.r1.getString());
+				// String valToWrite;
+				// valToWrite = Hdd.readFromFile(fileNum);
+				// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
+				// RM.r1.setInt(RM.r1.getInt() + 1);
+				// RM.r2.setInt(counter - 1); // one iteration complete
+				// }
 			}
 			// if input continued
 			else if (RM.chstHdd == 1
-					&& Integer.parseInt(RM.r2.getString()) != 0) {
+					&& Integer.parseInt(RM.r2.getString()) != 0
+					&& RM.mode == '1') {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
@@ -330,14 +335,14 @@ public class Processing {
 					RM.r1.setInt(RM.r1.getInt() + 1);
 					RM.r2.setInt(counter - 1); // one iteration complete
 				}
-				
+
 				// if input is finished
 				if (RM.chstHdd == 1 && RM.r2.getInt() == 0) {
 					RM.chstHdd = 0;
 					RM.ic++; // input complete
 				}
 			}
-			
+
 		} else if (cmd.matches("HALT")) {
 			for (int i = 0; i < RM.si.length; i++) {
 				RM.si[i] = '9';
