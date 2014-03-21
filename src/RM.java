@@ -59,18 +59,23 @@ public final class RM {
 			Hdd.initFiles();
 			Hdd.openFileForReading(0);
 
+			// load
 			Processing.processCommand(Memory.getFromVirtualAddress(0));
-			Processing.processCommand(Memory.getFromVirtualAddress(1));
-			RM.mode = '1'; // elevated mode for input
-			Processing.processCommand(Memory.getFromVirtualAddress(1));
-			Processing.processCommand(Memory.getFromVirtualAddress(1));
+			// cmp
+			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			System.out.println("ZF: " + RM.sf[0] + " OF: " + RM.sf[1]);
+			// jump
+			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			// out
+			RM.mode = '1';
+			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
 			RM.mode = '0'; // input done
-		
-			Processing.processCommand(Memory.getFromVirtualAddress(2));
+			System.out.println("IC after output, should be 4: " + RM.ic);
+			// halt
+			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
 			
-			RM.mode = '1'; // elevated mode for input
-			Processing.processCommand(Memory.getFromVirtualAddress(3));
-			Processing.processCommand(Memory.getFromVirtualAddress(3));
 			// clearing interrupts after IO
 			RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 
@@ -96,21 +101,6 @@ public final class RM {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			// Hdd.initFiles();
-			// Hdd.openFileForWriting(0);
-			// Hdd.writeToFile(0, "WATT");
-			// Hdd.writeToFile(0, "WATA");
-			// Hdd.writeToFile(0, "WATA");
-			//
-			// Hdd.seekCursor(0, 5);
-			// Hdd.writeToFile(0, "WOOT");
-			// Hdd.seekCursor(0, 5);
-			// Hdd.closeFile(0);
-			//
-			// Hdd.openFileForReading(0);
-			// System.out.println(Hdd.readFromFile(0));
-			//
 		}
 	}
 }
