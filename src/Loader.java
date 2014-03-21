@@ -4,7 +4,8 @@ import java.io.IOException;
 public class Loader {
 	public static String[] cmdRegexes = { "LR\\d{2}", "SR\\d{2}", "PUSR",
 			"POPR", "A1\\d{2}", "A2\\d{2}", "S1\\d{2}", "S2\\d{2}", "ML\\d{2}",
-			"DV\\d{2}", "OU\\d{2}", "IN\\d{2}", "FOW\\d", "FOR\\d", "FCL\\d",
+			"DV\\d{2}", "MOVE", "CM\\d{2}", "JP\\d{2}", "JE\\d{2}", "JL\\d{2}",
+			"JG\\d{2}", "OU\\d{2}", "IN\\d{2}", "FOW\\d", "FOR\\d", "FCL\\d",
 			"FS\\d{2}", "W\\d{3}", "R\\d{3}", "HALT", "DS\\d{2}", "\\$STR",
 			"\\$END" };
 
@@ -42,11 +43,11 @@ public class Loader {
 						}
 						line = flash.readLine(); // Skip DSOV line
 					}
-					
+
 					if (line != null && line.matches("\\$STR")) {
 						line = flash.readLine();
-					} 
-					
+					}
+
 					if (line != null && line.matches("\\$END")) {
 						loadSuccessful = true;
 						break;
@@ -60,7 +61,8 @@ public class Loader {
 						VMProgramIC++;
 					}
 				} else {
-					System.out.println("Illegal syntax found! stopping loading.");
+					System.out
+							.println("Illegal syntax found! stopping loading.");
 					System.out.println(line);
 					break;
 				}

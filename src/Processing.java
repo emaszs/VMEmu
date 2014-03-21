@@ -144,6 +144,42 @@ public class Processing {
 				RM.r2.setString(Integer.toString(resultMod));
 				RM.ic++;
 			}
+		} else if (cmd.matches("MOVE")) {
+			RM.r2 = RM.r1;
+			RM.ic++;
+		} else if (cmd.matches("CM\\d\\d")) {
+			int virtualAdr = Integer.parseInt(cmd.substring(2, 4));
+			String strValMem = Memory.getFromVirtualAddress(virtualAdr);
+			if (isNumeric(RM.r1.getString()) && isNumeric(strValMem)) {
+				int valR1 = RM.r1.getInt();
+				int valMem = Integer.parseInt(strValMem);
+
+				if (valR1 > valMem) {
+					RM.sf[0] = '0'; // ZF
+					RM.sf[1] = '0'; // OF
+				} else if (valR1 < valMem) {
+					RM.sf[0] = '0';
+					RM.sf[1] = '1';
+				} else {
+					RM.sf[0] = '1';
+					RM.sf[1] = '0';
+				}
+			}
+			RM.ic++;
+		} else if (cmd.matches("JP\\d\\d")) {
+			RM.ic = Integer.parseInt(cmd.substring(2, 4));
+		} else if (cmd.matches("JE\\d\\d")) {
+			if (RM.sf[0] == '1' && RM.sf[1] == '0') {
+				RM.ic = Integer.parseInt(cmd.substring(2, 4));
+			}
+		} else if (cmd.matches("JL\\d\\d")) {
+			if (RM.sf[0] == '0' && RM.sf[1] == '1') {
+				RM.ic = Integer.parseInt(cmd.substring(2, 4));
+			}
+		} else if (cmd.matches("JG\\d\\d")) {
+			if (RM.sf[0] == '0' && RM.sf[1] == '0') {
+				RM.ic = Integer.parseInt(cmd.substring(2, 4));
+			}
 		} else if (cmd.matches("OU\\d\\d")) { // output to printer
 			int counter = 0;
 			RM.si[2] = '1';
