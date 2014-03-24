@@ -61,6 +61,7 @@ public final class RM {
 			Hdd.initFiles();
 			Hdd.openFileForReading(0);
 
+			
 			Ui.workingProgram();
 			
 			
