@@ -43,9 +43,14 @@ public class Processing {
 				if (result > 9999) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result % 10000;
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r1.setString(Integer.toString(result));
@@ -64,9 +69,14 @@ public class Processing {
 				if (result > 9999) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result % 10000;
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r2.setString(Integer.toString(result));
@@ -85,9 +95,14 @@ public class Processing {
 				if (result < 0) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result * (-1);
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r1.setString(Integer.toString(result));
@@ -106,9 +121,14 @@ public class Processing {
 				if (result < 0) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result * (-1);
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r1.setString(Integer.toString(result));
@@ -127,9 +147,14 @@ public class Processing {
 				if (result > 9999) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result % 10000;
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 				RM.r1.setString(Long.toString(result));
 				RM.ic++;
@@ -328,10 +353,16 @@ public class Processing {
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.closeFile(fileNum);
 			RM.ic++;
+<<<<<<< HEAD
 			RM.reduceTimer();
 		} else if (cmd.matches("FS\\d\\d")) {
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.seekCursor(fileNum, Integer.parseInt(cmd.substring(2, 4)));
+=======
+		} else if (cmd.matches("FS\\d\\d")) { //File seek XY - X is file number, Y - line number
+			int fileNum = Integer.parseInt(cmd.substring(2, 3));
+			Hdd.seekCursor(fileNum, Integer.parseInt(cmd.substring(3, 4)));
+>>>>>>> 886b826c235c3099b55215b7dfcdf71b8fe4f889
 			RM.ic++;
 			RM.reduceTimer();
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
