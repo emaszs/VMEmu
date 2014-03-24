@@ -116,7 +116,13 @@ public final class RM {
 	
 	public static void doStep() {
 		
+		
 		Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+		
+		t = t-1;
+		if (t == 0) {
+			ti = 1;
+		}
 		
 		if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0' || pi > '0' || ti > 0) {
 			if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0') {
@@ -146,14 +152,11 @@ public final class RM {
 		}
 	}
 	
-	public static void reduceTimer() {
-		t = t-1;
-		if (t == 0) {
-			ti = 1;
-		}
-			
-		
-		
-	}
+	//public static void reduceTimer() {
+		//t = t-1;
+		//if (t == 0) {
+		//	ti = 1;
+		//}
+	//}
 	
 }
