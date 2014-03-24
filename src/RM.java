@@ -21,6 +21,7 @@ public final class RM {
 	public static char pi = '0'; // program interrupts
 	public static char[] si = { '0', '0', '0', '0' }; // supervisor interrupts
 	public static int t = 0; // timer
+	public static int sm = 0; // semaphor register
 	public static int ti = 0; // timer interrupt
 	public static int chstPrinter = 0, chstFlash = 0, chstHdd = 0; // channel
 																	// status. 1
