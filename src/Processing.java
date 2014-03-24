@@ -13,19 +13,23 @@ public class Processing {
 			val = Memory.getFromVirtualAddress(adr);
 			RM.r1.setString(val);
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("SR\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
 			String val = RM.r1.getString();
 			Memory.writeToVirtualAddress(adr, val);
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("PUSR")) {
 			RM.sp = RM.sp - 1;
 			Memory.writeToVirtualAddress(RM.sp, RM.r1.toString());
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("POPR")) {
 			RM.r1.setString(Memory.getFromVirtualAddress(RM.sp));
 			RM.sp = RM.sp + 1;
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("A1\\d\\d")) {
 			System.out.println("Using addition to R1");
 			int adr = Integer.parseInt(cmd.substring(2, 4));
@@ -46,6 +50,7 @@ public class Processing {
 
 				RM.r1.setString(Integer.toString(result));
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("A2\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
@@ -66,6 +71,7 @@ public class Processing {
 
 				RM.r2.setString(Integer.toString(result));
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("S1\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
@@ -86,6 +92,7 @@ public class Processing {
 
 				RM.r1.setString(Integer.toString(result));
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("S2\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
@@ -106,6 +113,7 @@ public class Processing {
 
 				RM.r1.setString(Integer.toString(result));
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("ML\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
@@ -125,6 +133,7 @@ public class Processing {
 				}
 				RM.r1.setString(Long.toString(result));
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("DV\\d\\d")) {
 			int adr = Integer.parseInt(cmd.substring(2, 4));
@@ -143,10 +152,12 @@ public class Processing {
 				RM.r1.setString(Integer.toString(resultDiv));
 				RM.r2.setString(Integer.toString(resultMod));
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("MOVE")) {
 			RM.r2 = RM.r1;
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("CM\\d\\d")) {
 			int virtualAdr = Integer.parseInt(cmd.substring(2, 4));
 			String strValMem = Memory.getFromVirtualAddress(virtualAdr);
@@ -166,25 +177,33 @@ public class Processing {
 				}
 			}
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("JP\\d\\d")) {
 			RM.ic = Integer.parseInt(cmd.substring(2, 4));
+			RM.reduceTimer();
 		} else if (cmd.matches("JE\\d\\d")) {
 			if (RM.sf[0] == '1' && RM.sf[1] == '0') {
 				RM.ic = Integer.parseInt(cmd.substring(2, 4));
+				RM.reduceTimer();
 			} else {
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("JL\\d\\d")) {
 			if (RM.sf[0] == '0' && RM.sf[1] == '1') {
 				RM.ic = Integer.parseInt(cmd.substring(2, 4));
+				RM.reduceTimer();
 			} else {
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("JG\\d\\d")) {
 			if (RM.sf[0] == '0' && RM.sf[1] == '0') {
 				RM.ic = Integer.parseInt(cmd.substring(2, 4));
+				RM.reduceTimer();
 			} else {
 				RM.ic++;
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("OU\\d\\d")) { // output to printer
 			int counter = 0;
@@ -196,6 +215,8 @@ public class Processing {
 
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
+				
+				RM.reduceTimer();
 
 				// if (isNumeric(RM.r1.getString()) && counter != 0) {
 				// int adrToWriteFrom = RM.r1.getInt();
@@ -234,7 +255,10 @@ public class Processing {
 				if (RM.chstPrinter == 1 && RM.r2.getInt() == 0) {
 					RM.chstPrinter = 0;
 					RM.ic++; // input complete
+					RM.mode = '0';
+					RM.si[2] = '0';
 				}
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("IN\\d\\d")) { // input from flash
 			int counter = 0;
@@ -246,6 +270,8 @@ public class Processing {
 
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
+				
+				RM.reduceTimer();
 
 				// if (isNumeric(RM.r1.getString()) && counter != 0) {
 				// int adrToWrite = Integer.parseInt(RM.r1.getString());
@@ -282,24 +308,32 @@ public class Processing {
 				if (RM.chstFlash == 1 && RM.r2.getInt() == 0) {
 					RM.chstFlash = 0;
 					RM.ic++; // input complete
+					RM.mode = '0';
+					RM.si[3] = '0';
 				}
+				
+				RM.reduceTimer();
 			}
 		} else if (cmd.matches("FOW\\d")) { // open file for writing
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.openFileForWriting(fileNum);
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("FOR\\d")) { // open file for reading
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.openFileForReading(fileNum);
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("FCL\\d")) { // close file
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.closeFile(fileNum);
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("FS\\d\\d")) {
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.seekCursor(fileNum, Integer.parseInt(cmd.substring(2, 4)));
 			RM.ic++;
+			RM.reduceTimer();
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2
 			int counter = 0;
@@ -311,6 +345,8 @@ public class Processing {
 
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
+				
+				RM.reduceTimer();
 
 				// if (isNumeric(RM.r1.getString()) && counter != 0) {
 				// int adrToReadFrom = Integer.parseInt(RM.r1.getString());
@@ -340,7 +376,11 @@ public class Processing {
 				if (RM.chstHdd == 1 && RM.r2.getInt() == 0) {
 					RM.chstHdd = 0;
 					RM.ic++; // input complete
+					RM.mode = '0';
+					RM.si[0] = '0';
 				}
+				
+				RM.reduceTimer();
 			}
 
 		} else if (cmd.matches("R\\d\\d\\d")) { // read from file n XY lines to
@@ -353,6 +393,8 @@ public class Processing {
 
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
+				
+				RM.reduceTimer();
 
 				// if (isNumeric(RM.r1.getString()) && counter != 0) {
 				// int adrToWrite = Integer.parseInt(RM.r1.getString());
@@ -382,13 +424,19 @@ public class Processing {
 				if (RM.chstHdd == 1 && RM.r2.getInt() == 0) {
 					RM.chstHdd = 0;
 					RM.ic++; // input complete
+					RM.mode = '0';
+					RM.si[1] = '0';
 				}
+				
+				RM.reduceTimer();
 			}
 
 		} else if (cmd.matches("HALT")) {
 			for (int i = 0; i < RM.si.length; i++) {
 				RM.si[i] = '9';
 			}
+			
+			RM.reduceTimer();
 		}
 
 	}

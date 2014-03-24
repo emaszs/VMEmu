@@ -21,6 +21,7 @@ public final class RM {
 	public static char pi = '0'; // program interrupts
 	public static char[] si = { '0', '0', '0', '0' }; // supervisor interrupts
 	public static int t = 0; // timer
+	public static int ti = 0; // timer interrupt
 	public static int chstPrinter = 0, chstFlash = 0, chstHdd = 0; // channel
 																	// status. 1
 																	// - in use
@@ -45,10 +46,10 @@ public final class RM {
 		boolean loaded = false;
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/Emilis/Desktop/prog.txt"));
+					"C:/Users/Tomas/Desktop/gggg.txt"));
 			loaded = Loader.loadProgram(flash);
 			printer = new BufferedWriter(new FileWriter(
-					"C:/Users/Emilis/Desktop/print.txt"));
+					"C:/Users/Tomas/Desktop/print.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,41 +60,50 @@ public final class RM {
 			Hdd.initFiles();
 			Hdd.openFileForReading(0);
 
+			Ui.workingProgram();
+			
+			
+			
+			
+			
+			
+			
+			
 			// load
-			Processing.processCommand(Memory.getFromVirtualAddress(0));
+			//Processing.processCommand(Memory.getFromVirtualAddress(0));
 			// cmp
-			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
-			System.out.println("ZF: " + RM.sf[0] + " OF: " + RM.sf[1]);
+			//Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			//System.out.println("ZF: " + RM.sf[0] + " OF: " + RM.sf[1]);
 			// jump
-			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			//Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
 			// out
-			RM.mode = '1';
-			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
-			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
-			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
-			RM.mode = '0'; // input done
-			System.out.println("IC after output, should be 4: " + RM.ic);
+			//RM.mode = '1';
+			//Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			//Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			//Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			//RM.mode = '0'; // input done
+			//System.out.println("IC after output, should be 4: " + RM.ic);
 			// halt
-			Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+			//Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
 			
 			// clearing interrupts after IO
-			RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
+			//RM.si[0] = RM.si[1] = RM.si[2] = RM.si[3] = '0';
 
-			System.out.println("r1 value: " + RM.r1.getString());
-			System.out.println("r2 value: " + RM.r2.getString());
-			System.out.println("ic value: " + RM.ic);
+			//System.out.println("r1 value: " + RM.r1.getString());
+			//System.out.println("r2 value: " + RM.r2.getString());
+			//System.out.println("ic value: " + RM.ic);
 
-			System.out.println("Basic memory:");
-			memory.printMemory(0, 40);
+			//System.out.println("Basic memory:");
+			//memory.printMemory(0, 40);
 
-			System.out.println("Supervisor memory:");
-			memory.printMemory(40, 50);
+			//System.out.println("Supervisor memory:");
+			//memory.printMemory(40, 50);
 
-			System.out.println("Amount of free memory blocks left: "
-					+ memory.getNumFreeBlocks());
+			//System.out.println("Amount of free memory blocks left: "
+			//		+ memory.getNumFreeBlocks());
 
-			System.out.println("0001 virtual value: "
-					+ Memory.getFromVirtualAddress(1));
+			//System.out.println("0001 virtual value: "
+			//		+ Memory.getFromVirtualAddress(1));
 
 			try {
 				flash.close();
@@ -103,4 +113,47 @@ public final class RM {
 			}
 		}
 	}
+	
+	public static void doStep() {
+		
+		Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
+		
+		if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0' || pi > '0' || ti > 0) {
+			if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0') {
+				if (mode == '0') {
+					mode = '1';
+				}
+				
+				if (si[0] == '9' || si[1] == '9' || si[2] == '9' || si[3] == '9') {
+					si[0] = '0';
+					si[1] = '0';
+					si[2] = '0';
+					si[3] = '0';
+					Ui.haltDetected();
+				}
+			}
+			if (ti > 0) {
+				Ui.outOfComputingTime();
+				t = t + 10;
+				ti = 0;
+			}
+			
+			if (pi > '0') {
+				Ui.divisionByZero();
+			}
+			
+			
+		}
+	}
+	
+	public static void reduceTimer() {
+		t = t-1;
+		if (t == 0) {
+			ti = 1;
+		}
+			
+		
+		
+	}
+	
 }

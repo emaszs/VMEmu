@@ -1,10 +1,12 @@
 /Block.class
+/FileInfo.class
+/Hdd.class
+/Loader.class
 /Memory.class
 /Processing.class
 /RM.class
 /VM.class
 /Word.class
-/Hdd.class
-/Handle.class
-/FileInfo.class
-/Loader.class
+/Gui.class
+/Gui$1.class
+/Ui.class
