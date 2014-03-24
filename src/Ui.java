@@ -7,12 +7,11 @@ public class Ui {
 	public static void workingProgram() {
 		Scanner input = new Scanner(System.in);
 		
-		
+		RM.t = 10;
 		
 		do {
 			System.out.println("/n/n/n/n/n/n/n/n");
 			System.out.println("**************************************************");
-			RM.t = RM.t +10;
 			
 			System.out.println("Basic memory:");
 			RM.memory.printMemory(0, 40);
