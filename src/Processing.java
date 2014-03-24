@@ -39,9 +39,14 @@ public class Processing {
 				if (result > 9999) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result % 10000;
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r1.setString(Integer.toString(result));
@@ -59,9 +64,14 @@ public class Processing {
 				if (result > 9999) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result % 10000;
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r2.setString(Integer.toString(result));
@@ -79,9 +89,14 @@ public class Processing {
 				if (result < 0) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result * (-1);
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r1.setString(Integer.toString(result));
@@ -99,9 +114,14 @@ public class Processing {
 				if (result < 0) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result * (-1);
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 
 				RM.r1.setString(Integer.toString(result));
@@ -119,9 +139,14 @@ public class Processing {
 				if (result > 9999) {
 					RM.sf[1] = '1'; // Setting OF
 					result = result % 10000;
+				} else {
+					RM.sf[1] = '0';
 				}
+				
 				if (result == 0) {
 					RM.sf[0] = '1'; // Setting ZF
+				} else {
+					RM.sf[0] = '0';
 				}
 				RM.r1.setString(Long.toString(result));
 				RM.ic++;
