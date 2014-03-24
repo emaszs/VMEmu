@@ -296,9 +296,9 @@ public class Processing {
 			int fileNum = Integer.parseInt(cmd.substring(3, 4));
 			Hdd.closeFile(fileNum);
 			RM.ic++;
-		} else if (cmd.matches("FS\\d\\d")) {
-			int fileNum = Integer.parseInt(cmd.substring(3, 4));
-			Hdd.seekCursor(fileNum, Integer.parseInt(cmd.substring(2, 4)));
+		} else if (cmd.matches("FS\\d\\d")) { //File seek XY - X is file number, Y - line number
+			int fileNum = Integer.parseInt(cmd.substring(2, 3));
+			Hdd.seekCursor(fileNum, Integer.parseInt(cmd.substring(3, 4)));
 			RM.ic++;
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2
