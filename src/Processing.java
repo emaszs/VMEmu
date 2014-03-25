@@ -224,20 +224,16 @@ public class Processing {
 		} else if (cmd.matches("JL\\d\\d")) {
 			if (RM.sf[0] == '0' && RM.sf[1] == '1') {
 				RM.ic = Integer.parseInt(cmd.substring(2, 4));
-				//RM.reduceTimer();
 			} else {
 				RM.ic++;
-				//RM.reduceTimer();
 			}
 		} else if (cmd.matches("JG\\d\\d")) {
 			if (RM.sf[0] == '0' && RM.sf[1] == '0') {
 				RM.ic = Integer.parseInt(cmd.substring(2, 4));
-				//RM.reduceTimer();
 			} else {
 				RM.ic++;
-				//RM.reduceTimer();
 			}
-		} else if (cmd.matches("OU\\d\\d") && RM.sm == 0) { // output to printer
+		} else if (cmd.matches("OU\\d\\d")) { // output to printer
 			int counter = 0;
 			RM.si[2] = '1';
 

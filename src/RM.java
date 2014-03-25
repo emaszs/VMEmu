@@ -39,8 +39,8 @@ public final class RM {
 		memory.allocatePageTableToVM();
 
 		memory.initSupervisorAllocationInfo();
-		System.out.println("Amount of free memory blocks left: "
-				+ memory.getNumFreeBlocks());
+		//System.out.println("Amount of free memory blocks left: "
+		//		+ memory.getNumFreeBlocks());
 
 		memory.allocateNumBlocksToVM(10);
 
