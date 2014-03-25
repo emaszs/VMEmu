@@ -6,7 +6,7 @@ import java.io.RandomAccessFile;
 public class Hdd {
 	public static final int FILE_LENGTH = 10;
 	public static final int FILE_NUM = 3;
-	public static final String REAL_FILE_LOC = "C:/Users/Tomas/Desktop/hdd.txt";
+	public static final String REAL_FILE_LOC = "C:/Users/user/Desktop/hdd.txt";
 	public static FileInfo[] fileList = new FileInfo[3];
 
 	public static void seekCursor(int fileNum, int lineNum) {
@@ -16,8 +16,8 @@ public class Hdd {
 	public static void initFiles() {
 		for (int i = 0; i < FILE_NUM; i++) {
 			fileList[i] = new FileInfo();
-			fileList[i].fileLocation = i * FILE_LENGTH;
-			fileList[i].cursorPosition = i * FILE_LENGTH;
+			
+			seekCursor(i, i * 10);
 
 			fileList[i].fileIsOpenForWriting = false;
 			fileList[i].fileIsOpenForReading = false;
