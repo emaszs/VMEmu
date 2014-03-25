@@ -76,8 +76,8 @@ public class Ui {
 	
 	public static void outOfComputingTime() {
 		System.out.println("Program is out of computing time, allocating more.");
-		System.out.println(RM.ic);
-		System.out.println(Memory.getFromVirtualAddress(RM.ic));
+		//System.out.println(RM.ic);
+		//System.out.println(Memory.getFromVirtualAddress(RM.ic));
 	}
 	
 	public static void divisionByZero() {
@@ -138,11 +138,10 @@ public class Ui {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("*************************");
 		System.out.println("*Processor and memory before execution*");
-		System.out.println("Basic memory:");
 		printAll();
 		System.out.println("Press enter to start execution...");
 		enter = scan.nextLine();
-		
+		System.out.println("*************************");
 		System.out.println("Executing program...");
 		do {
 			RM.doStep();

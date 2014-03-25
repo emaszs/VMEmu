@@ -212,7 +212,7 @@ public class Processing {
 				}
 			}
 			RM.ic++;
-			RM.sm = 1;
+			RM.sm = 0;
 		} else if (cmd.matches("JP\\d\\d")) {
 			RM.ic = Integer.parseInt(cmd.substring(2, 4));
 		} else if (cmd.matches("JE\\d\\d")) {
