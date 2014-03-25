@@ -1,3 +1,4 @@
+package memory;
 
 public class FileInfo {
 	int fileLocation;

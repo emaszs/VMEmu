@@ -1,5 +1,9 @@
-import java.util.Scanner;
+package ui;
 import java.util.InputMismatchException;
+import java.util.Scanner;
+
+import machine.Memory;
+import machine.RM;
 
 public class Ui {
 	private static String key;
@@ -184,13 +188,12 @@ public class Ui {
 	}
 
 	public static void wholeExecution() {
-		String enter;
 		Scanner scan = new Scanner(System.in);
 		System.out.println("*************************");
 		System.out.println("*Processor and memory before execution*");
 		printAll();
 		System.out.println("Press enter to start execution...");
-		enter = scan.nextLine();
+		scan.nextLine();
 		System.out.println("*************************");
 		System.out.println("Executing program...");
 		do {
@@ -198,7 +201,7 @@ public class Ui {
 		} while (end != true);
 
 		System.out.println("Execution finished. Press enter to continue...");
-		enter = scan.nextLine();
+		scan.nextLine();
 		System.out.println("*************************");
 		System.out.println("*Processor and memory after execution*");
 		printAll();

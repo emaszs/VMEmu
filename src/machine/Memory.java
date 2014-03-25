@@ -1,3 +1,7 @@
+package machine;
+import memory.Block;
+import memory.Word;
+
 
 public class Memory {
 

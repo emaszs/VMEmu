@@ -1,5 +1,8 @@
+package memory;
 import java.io.BufferedReader;
 import java.io.IOException;
+
+import machine.Memory;
 
 public class Loader {
 	public static String[] cmdRegexes = { "LR\\d{2}", "SR\\d{2}", "PUSR",

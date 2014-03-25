@@ -1,3 +1,6 @@
+package memory;
+import machine.RM;
+
 
 public class Block {
     private final Word[] block = new Word[RM.BLOCK_SIZE];

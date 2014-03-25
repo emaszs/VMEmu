@@ -1,8 +1,14 @@
+package machine;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import ui.Ui;
+import memory.Hdd;
+import memory.Loader;
+import memory.Word;
 
 public final class RM {
 	public static final int WORD_SIZE = 4;
@@ -47,10 +53,10 @@ public final class RM {
 		boolean loaded = false;
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/Tomas/Desktop/gggg.txt"));
+					"C:/Users/user/Desktop/prog1.txt"));
 			loaded = Loader.loadProgram(flash);
 			printer = new BufferedWriter(new FileWriter(
-					"C:/Users/Tomas/Desktop/print.txt"));
+					"C:/Users/user/Desktop/print.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

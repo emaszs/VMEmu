@@ -1,4 +1,7 @@
+package machine;
 import java.io.IOException;
+
+import memory.Hdd;
 
 public class Processing {
 	public static void processCommand(String cmd) {

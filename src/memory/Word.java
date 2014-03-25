@@ -1,3 +1,6 @@
+package memory;
+import machine.RM;
+
 public class Word {
 	private String word = new String();
 
