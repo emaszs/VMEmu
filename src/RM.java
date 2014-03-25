@@ -47,10 +47,10 @@ public final class RM {
 		boolean loaded = false;
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/user/Desktop/prog3.txt"));
+					"C:/Users/Tomas/Desktop/gggg.txt"));
 			loaded = Loader.loadProgram(flash);
 			printer = new BufferedWriter(new FileWriter(
-					"C:/Users/user/Desktop/print.txt"));
+					"C:/Users/Tomas/Desktop/print.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
