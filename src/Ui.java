@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
+
 
 public class Ui {
 	private static String key;
@@ -9,6 +11,8 @@ public class Ui {
 	public static void workingProgram() {
 		Scanner input = new Scanner(System.in);
 		
+		RM.sf[0] = '0';
+		RM.sf[1] = '0';
 		RM.t = 10;
 		//  program execution as a whole or by steps
 		//  Showing VM memory, OA memory by block number
@@ -45,25 +49,75 @@ public class Ui {
 		if (modeChosen == 1) {
 			wholeExecution();
 		}
-		
-		
-		//do {
-			//System.out.println("Amount of free memory blocks left: "
-			//	+ RM.memory.getNumFreeBlocks());
-			//printRegisters() ;
-			//System.out.println("Commands: n - next step, q - quit");
-			//key = input.nextLine();
-			//switch(key) {
-			//case "n": {
-			//	RM.doStep();
-			//}
-			//break;
-			//case "q": {
-			//	end = true;
-			//}
-			//break;
-			//}
-		//} while(end != true);
+		else if (modeChosen == 2) {
+			do {
+				System.out.println("*****************************");
+				System.out.println("*Executing program in step-by-step mode*");
+				printRegisters() ;
+				System.out.println(Memory.getFromVirtualAddress(RM.ic));
+				System.out.println("Choose command:");
+				System.out.println("Print (a)ll memory ");
+				System.out.println("Print memory (b)lock");
+				System.out.println("Print (v)irtual memory");
+				System.out.println("(E)xecute step");
+				System.out.println("Print the amount of (f)ree memory");
+				key = input.nextLine();
+				switch(key) {
+					case "a": {
+						System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+						printAllMemory();
+						System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					}
+					break;
+					
+					case "b": {
+						int blockNumber = 0;
+						boolean good = false;
+								
+						do {		
+							System.out.println("Number of memory block you need printed:");
+							try {
+								blockNumber = input.nextInt();
+								if (blockNumber > 49 || blockNumber < 0) {
+									System.out.println("Block number out of range, must be between 0 and 49.");
+								}
+								else {
+									good = true;
+								}
+							} catch (InputMismatchException e) {
+								System.out.println("Wrong number format, please try again...");
+							}
+						} while (good != true);
+						System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+						RM.memory.printMemory(blockNumber, blockNumber + 1);
+						System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					}
+					break;
+					
+					case "v": {
+						System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+						printVirtualMemory();
+						System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					}
+					break;
+					
+					case "e": {
+						RM.doStep();
+					}
+					
+					case "f": {
+						System.out.println("Amount of free memory blocks left: "
+								+ RM.memory.getNumFreeBlocks());
+					}
+					break;
+					
+					default: {
+						System.out.println("Unknown command, please try again!");
+					}
+				}
+				
+			} while(end != true);
+		}
 		
 		System.out.println("Ending processor work.");
 		
@@ -110,19 +164,9 @@ public class Ui {
 
 		System.out.println("T: " + RM.t);
 		
-		if (RM.sf[0] == '\u0000') {
-			System.out.print("ZF: " + '0');
-		}
-		else {
-			System.out.print("ZF: " + RM.sf[0]);
-		}
+		System.out.print("ZF: " + RM.sf[0]);
+		System.out.println(" OF: " + RM.sf[1]);
 		
-		if (RM.sf[1] == '\u0000') {
-			System.out.println(" OF: " + '0');
-		}
-		else {
-			System.out.println(" OF: " + RM.sf[1]);
-		}
 		System.out.println("MODE: " + RM.mode);
 		System.out.print("CHST1: " + RM.chstFlash);
 		System.out.print(" CHST2: " + RM.chstPrinter);
@@ -131,6 +175,13 @@ public class Ui {
 		System.out.println("SI " + RM.si[0] + RM.si[1] + RM.si[2] + RM.si[3]);
 		System.out.println("TI: " + RM.ti);
 		System.out.println("SM: " + RM.sm);
+	}
+	
+	public static void printAllMemory() {
+		System.out.println("Basic memory:");
+		RM.memory.printMemory(0, 40);
+		System.out.println("Supervisor memory:");
+		RM.memory.printMemory(40, 50);
 	}
 	
 	public static void wholeExecution() {
@@ -161,11 +212,18 @@ public class Ui {
 	}
 	
 	public static void printAll() {
-		System.out.println("Basic memory:");
-		RM.memory.printMemory(0, 40);
-		System.out.println("Supervisor memory:");
-		RM.memory.printMemory(40, 50);
+		printAllMemory();
 		printRegisters();
+	}
+	
+	public static void printVirtualMemory() {
+		for (int i = 0; i < 100; i++) {
+			if (i % 10 == 0 && i != 0) {
+				System.out.println();	
+			}
+			System.out.print(" " + Memory.getFromVirtualAddress(i));
+		}
+		System.out.println();
 	}
 	
 }
