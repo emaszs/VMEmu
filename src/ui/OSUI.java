@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.Scanner;
+
 import os.PyOS;
 import os.StartStop;
 
@@ -9,14 +11,56 @@ public class OSUI {
 	}
 
 	public static void startOS() {
-		PyOS.processList.add(new StartStop(1, "StartStop", 0, 100, "re"));
-		PyOS.id = 1;
+		Scanner input = new Scanner(System.in);
+		String key = new String();
+		boolean isModeChosen = false;
+		int modeChosen = 0;
 		
-		PyOS.planner();
+		do {
+			System.out
+					.println("Execute (w)hole package or in (s)tep-by-step mode?");
+			key = input.nextLine();
+
+			switch (key) {
+			case "w": 
+				System.out.println("Executing whole program");
+				isModeChosen = true;
+				modeChosen = 1;
+				break;
+
+			case "s": 
+				System.out.println("Using step-by-step mode");
+				isModeChosen = true;
+				modeChosen = 2;
+				break;
+
+			default: 
+				System.out.println("Unknown command, try again...");
+			}
+		} while (isModeChosen != true);
 		
-		while (PyOS.timer > 0) {
-			PyOS.currentProcess.run();
+		if (modeChosen == 1) {
+			PyOS.processList.add(new StartStop(1, "StartStop", 0, 100, "re"));
+			PyOS.id = 1;	
+			
+			PyOS.planner();
+			// main OS loop
+			while (PyOS.MOSEnd != 1) {
+				if(PyOS.timer > 0) {
+					PyOS.currentProcess.run();
+					PyOS.timer--;
+				} else {
+					PyOS.planner();
+				}
+			}
+		} else if (modeChosen == 2) {
+			do {
+				//TODO beatiful & elegant UI
+				//key = input.nextLine();
+			} while (PyOS.MOSEnd != 1);
 		}
+		
+		input.close();
 		
 		PyOS.currentProcess.run();
 	}
