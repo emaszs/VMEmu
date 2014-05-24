@@ -10,7 +10,6 @@ import res.SupervisorMemory;
 import res.TaskInHardDrive;
 import res.TaskInUserMemory;
 import res.UserMemory;
-import res.WriteLineToHardDrive;
 import res.MessageAboutIdentifiedInterrupt;
 import res.MessageAboutInterrupt;
 
