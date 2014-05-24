@@ -2,6 +2,20 @@ package os;
 
 import java.util.ArrayList;
 
+import res.Flash;
+import res.Interrupt;
+import res.LineInMemory;
+import res.PrintLine;
+import res.Printer;
+import res.ReadLineFromFlash;
+import res.ReadLineFromHardDrive;
+import res.Resource;
+import res.SupervisorMemory;
+import res.TaskInHardDrive;
+import res.TaskInUserMemory;
+import res.UserMemory;
+import res.WriteLineToHardDrive;
+
 public class PyOS {
 	public static ArrayList<Process> processList = new ArrayList<Process>();
 	public static ArrayList<Resource> resourceList = new ArrayList<Resource>();

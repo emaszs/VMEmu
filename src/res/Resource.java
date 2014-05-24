@@ -1,4 +1,6 @@
-package os;
+package res;
+
+import os.Process;
 
 public class Resource {
 	

@@ -3,12 +3,13 @@ import memory.Word;
 
 public class RMState {
 
-	public static Word ptp;
-	public static Word r1, r2;
-	public static int ic;
-	public static char[] sf;
-	public static int sp = 0;
-	public static int t = 0;
+	public Word ptp;
+	public Word r1;
+	public Word r2;
+	public int ic;
+	public char[] sf;
+	public int sp = 0;
+	public int t = 0;
 	
 	public RMState() {
 		

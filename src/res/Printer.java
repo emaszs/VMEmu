@@ -1,4 +1,4 @@
-package os;
+package res;
 //TODO
 public class Printer extends Resource {
 	

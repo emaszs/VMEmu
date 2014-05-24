@@ -1,4 +1,7 @@
-package os;
+package res;
+
+import os.Process;
+
 //TODO
 public class ReadLineFromHardDrive extends Process {
 	

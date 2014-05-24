@@ -1,13 +1,8 @@
 package machine;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import ui.Ui;
-import memory.Hdd;
-import memory.Loader;
 import memory.Word;
 
 public final class RM {

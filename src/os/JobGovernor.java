@@ -1,4 +1,7 @@
 package os;
+
+import res.Resource;
+
 //TODO
 public class JobGovernor extends Process {
 

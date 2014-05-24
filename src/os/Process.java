@@ -2,6 +2,8 @@ package os;
 
 import java.util.ArrayList;
 
+import res.Resource;
+
 public abstract class Process {
 
 	//ArrayList processList;
