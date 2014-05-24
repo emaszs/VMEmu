@@ -11,6 +11,8 @@ import res.TaskInHardDrive;
 import res.TaskInUserMemory;
 import res.UserMemory;
 import res.WriteLineToHardDrive;
+import res.MessageAboutIdentifiedInterrupt;
+import res.MessageAboutInterrupt;
 
 public class PyOS {
 	public static ArrayList<Process> processList = new ArrayList<Process>();
@@ -263,9 +265,20 @@ public class PyOS {
 			newResource = new TaskInUserMemory(id, "TaskInUserMemory", creatorID);
 		}
 		
+		//create Pranesimas apie identifikuota pertraukima
+		if (resourceNo == 10) {
+			newResource = new MessageAboutIdentifiedInterrupt(id, "TaskInUserMemory", creatorID);
+		}
+		
+		
 		//create Eilute atmintyje
 		if (resourceNo == 19) {
 			newResource = new LineInMemory(id, "LineInMemory", creatorID);
+		}
+		
+		//create Pranesimas apie pertraukima
+		if (resourceNo == 20) {
+			newResource = new MessageAboutInterrupt(id, "TaskInUserMemory", creatorID);
 		}
 		
 		//add to creators list
@@ -388,7 +401,7 @@ public class PyOS {
 			readyProcesses.add(processToGetResource);
 		
 			// if not a message
-			if (((resourceNumber >= 2) && (resourceNumber <= 9) && (resourceNumber !=8)) || (resourceNumber == 19)) {
+			if (((resourceNumber >= 2) && (resourceNumber <= 10) && (resourceNumber !=8)) || (resourceNumber == 19) || (resourceNumber == 20)) {
 				processToGetResource.ownedResList.add(distributableResource);
 				distributableResource.user = processToGetResource;
 			}
