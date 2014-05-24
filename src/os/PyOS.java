@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import res.Flash;
 import res.LineInMemory;
-import res.PrintLine;
 import res.Printer;
-import res.ReadLineFromFlash;
-import res.ReadLineFromHardDrive;
 import res.Resource;
 import res.SupervisorMemory;
 import res.TaskInHardDrive;
