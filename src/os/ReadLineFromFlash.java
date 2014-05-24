@@ -1,6 +1,5 @@
-package res;
+package os;
 
-import os.Process;
 
 //TODO
 public class ReadLineFromFlash extends Process {
