@@ -3,7 +3,6 @@ package os;
 import java.util.ArrayList;
 
 import res.Flash;
-import res.Interrupt;
 import res.LineInMemory;
 import res.PrintLine;
 import res.Printer;
