@@ -21,6 +21,9 @@ public class PyOS {
 	public static Process currentProcess = null;
 	public static int id = 0; //process inner number
 	public static int id2 = 0; //resource inned number
+	
+	public static int timer = 10;
+	
 	//Waiting process lists
 	public static ArrayList<Process> waitingList1 = new ArrayList<Process>(); //MOS pabaiga
 	public static ArrayList<Process> waitingList2 = new ArrayList<Process>(); //Supervizorine atmintis
@@ -46,12 +49,12 @@ public class PyOS {
 	public static int[] resourceAmounts = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};// 0 index unused
 	
 	
-	public static void main(final String[] args) {
-		
-		processList.add(new StartStop(1, "StartStop", 0, 100, "re"));
-		id = 1;
-		//TODO rest
-	}
+//	public static void main(final String[] args) {
+//		
+//		processList.add(new StartStop(1, "StartStop", 0, 100, "re"));
+//		id = 1;
+//		//TODO rest
+//	}
 	
 	
 	//Process primitives
@@ -379,6 +382,7 @@ public class PyOS {
 			
 			currentProcess = readyProcesses.get(index);
 			currentProcess.pState = "ru";
+			PyOS.timer = 10;
 		}
 	}
 	
