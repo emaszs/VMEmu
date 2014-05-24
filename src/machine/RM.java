@@ -36,7 +36,7 @@ public final class RM {
 	public static BufferedReader flash;
 	public static BufferedWriter printer;
 
-	public static void main(final String[] args) {
+	/*public static void main(final String[] args) {
 
 		memory.initMemory();
 
@@ -53,10 +53,10 @@ public final class RM {
 		boolean loaded = false;
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/user/Desktop/prog1.txt"));
+					"C:/Users/Tomas/Desktop/gggg.txt"));
 			loaded = Loader.loadProgram(flash);
 			printer = new BufferedWriter(new FileWriter(
-					"C:/Users/user/Desktop/print.txt"));
+					"C:/Users/Tomas/Desktop/print.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -120,8 +120,9 @@ public final class RM {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 	
+	//TODO perdaryti
 	public static void doStep() {
 		
 		

@@ -1,15 +1,2 @@
-/Block.class
-/FileInfo.class
-/Hdd.class
-/Loader.class
-/Memory.class
-/Processing.class
-/RM.class
-/VM.class
-/Word.class
-/Gui.class
-/Gui$1.class
-/Ui.class
+/os
 /machine
-/memory
-/ui
