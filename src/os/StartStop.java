@@ -19,7 +19,7 @@ public class StartStop extends Process {
 		}
 		
 		//End
-		if ((phase == 1) && (PyOS.MOSEnd == 1)) {
+		if ((phase == 1) && (receivedResource == 1) && (pState.equals("ru"))) {
 			
 			
 		}

@@ -113,7 +113,7 @@ public class PyOS {
 		//find parent
 		int listIndex = 0;
 		int listSize = processList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (processList.get(i-1).intID == parentProcess) {
 				listIndex = i-1;
 			}
@@ -128,7 +128,7 @@ public class PyOS {
 		//find in list
 		int listIndex = 0;
 		int listSize = processList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (processList.get(i-1).intID == intID) {
 				listIndex = i-1;
 			}
@@ -177,7 +177,7 @@ public class PyOS {
 		if (processToDelete.pState.equals("re") == true) {
 			int listIndex3 = 0;
 			int listSize2 = readyProcesses.size();
-			for (int i = 1; 1 <= listSize2; i++) {
+			for (int i = 1; i <= listSize2; i++) {
 				if (readyProcesses.get(i-1).intID == processToDelete.intID) {
 					listIndex3 = i-1;
 				}
@@ -190,7 +190,7 @@ public class PyOS {
 	public static void stopProcess(int intID){
 		int listIndex = 0;
 		int listSize = processList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (processList.get(i-1).intID == intID) {
 				listIndex = i-1;
 			}
@@ -209,7 +209,7 @@ public class PyOS {
 	public static void activateProcess(int intID){
 		int listIndex = 0;
 		int listSize = processList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (processList.get(i-1).intID == intID) {
 				listIndex = i-1;
 			}
@@ -283,7 +283,7 @@ public class PyOS {
 		//add to creators list
 		int listIndex = 0;
 		int listSize = processList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (processList.get(i-1).intID == creatorID) {
 				listIndex = i-1;
 			}
@@ -299,7 +299,7 @@ public class PyOS {
 		//Find in list
 		int listIndex = 0;
 		int listSize = resourceList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (resourceList.get(i-1).intID == resourceID) {
 				listIndex = i-1;
 			}
@@ -311,7 +311,7 @@ public class PyOS {
 		int creator = resourceToDelete.creatorProcess;
 		int listIndex2 = 0;
 		listSize = processList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (processList.get(i-1).intID == creator) {
 				listIndex2 = i-1;
 			}
@@ -321,7 +321,7 @@ public class PyOS {
 		//remove from creator's list
 		int listIndex3 = 0;
 		listSize = creatorProcess.createdResList.size();
-		for (int i = 1; 1 <= listSize; i++) {
+		for (int i = 1; i <= listSize; i++) {
 			if (creatorProcess.createdResList.get(i-1).intID == resourceID) {
 				listIndex3 = i-1;
 			}
@@ -339,7 +339,7 @@ public class PyOS {
 			//Find last user
 			int listIndex = 0;
 			int listSize = freedResource.user.ownedResList.size();
-			for (int i = 1; 1 <= listSize; i++) {
+			for (int i = 1; i <= listSize; i++) {
 				if (freedResource.user.ownedResList.get(i-1).intID == freedResource.intID) {
 					listIndex = i-1;
 				}
