@@ -10,7 +10,6 @@ import res.SupervisorMemory;
 import res.TaskInHardDrive;
 import res.TaskInUserMemory;
 import res.UserMemory;
-import res.MessageAboutIdentifiedInterrupt;
 import res.MessageAboutInterrupt;
 
 public class PyOS {
@@ -269,10 +268,10 @@ public class PyOS {
 		}
 		
 		//create Pranesimas apie identifikuota pertraukima
-		if (resourceNo == 10) {
-			newResource = new MessageAboutIdentifiedInterrupt(id, "MessageAboutIdentifiedInterrupt", creatorID);
-		}
-		
+//		if (resourceNo == 10) {
+//			newResource = new MessageAboutIdentifiedInterrupt(id, "MessageAboutIdentifiedInterrupt", creatorID);
+//		}
+	
 		
 		//create Eilute atmintyje
 		if (resourceNo == 19) {

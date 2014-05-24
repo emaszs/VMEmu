@@ -1,5 +1,6 @@
 package os;
 
+import res.MessageAboutIdentifiedInterrupt;
 import res.Resource;
 
 //TODO
@@ -7,11 +8,11 @@ public class Interrupt extends Process {
 	public String interruptType = new String();
 	public int jobGovernorResponsibleForInt = 0;
 
-
-	public Interrupt(int intID, String extID, int parentProcess, int priority, String startState) {
-		super(intID, extID, parentProcess, priority, startState); 
+	public Interrupt(int intID, String extID, int parentProcess, int priority,
+			String startState) {
+		super(intID, extID, parentProcess, priority, startState);
 	}
-	
+
 	public void run() {
 		
 		//1) ask for Message about interrupt
@@ -47,7 +48,13 @@ public class Interrupt extends Process {
 		
 		//3) create MessageAboutIdentifiedInterrupt(10) resource
 		if ((phase == 2) && (pState.equals("ru"))) {	
-			PyOS.createResource(10, this.intID);
+			MessageAboutIdentifiedInterrupt newResource = new MessageAboutIdentifiedInterrupt(PyOS.id2++, 
+					"MessageAboutIdentifiedInterrupt", this.intID, interruptType, jobGovernorResponsibleForInt);
+
+			this.createdResList.add(newResource);
+			//TODO ?? why this array?
+			PyOS.resourceAmounts[10]++;		
+			PyOS.resourceList.add(newResource);
 		}
 		
 		
@@ -65,6 +72,5 @@ public class Interrupt extends Process {
 		
 		
 	}
-	
 
 }
