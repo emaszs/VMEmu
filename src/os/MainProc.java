@@ -8,6 +8,24 @@ public class MainProc extends Process {
 	
 	public void run() {
 		
+		//1) asks for task in hard drive memory
+		if ((phase == 0) && (pState.equals("ru"))) {
+			PyOS.askForResource(PyOS.waitingList7, 7);
+			neededResource = 7;
+			phase = 1;	
+		}
+		
+		//2-4) deleting or creating jobGovernor
+		//TODO
+		if ((phase == 0) && (receivedResource == 7) && (pState.equals("ru"))) {
+			neededResource = 0;
+
+			
+			
+			
+			
+			phase = 0;
+		}
 	}
 	
 

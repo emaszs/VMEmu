@@ -7,7 +7,8 @@ public class StartStop extends Process {
 	}
 	
 	public void run() {
-		//Initialization
+		//1-3) Initialization, asks for MOS end
+		//TODO
 		if (phase == 0) {
 			//System resource initialization
 			
@@ -15,13 +16,22 @@ public class StartStop extends Process {
 			
 			//System process initialization
 			
-			
+		
+			PyOS.askForResource(PyOS.waitingList1, 1);
+			neededResource = 1;	
+			phase = 1;
 		}
 		
-		//End
+		
+		//4-5) End, deletion
+		//TODO
 		if ((phase == 1) && (receivedResource == 1) && (pState.equals("ru"))) {
+			neededResource = 0;	
 			
 			
+			
+			
+			PyOS.MOSEnd = 1;
 		}
 	}
 	
