@@ -231,6 +231,7 @@ public class PyOS {
 	//Resource primitives
 	public static void createResource(int resourceNo, int creatorID){
 		Resource newResource = null;
+		//TODO WTF ID? id is used instead of id2 for creation of all resources
 		id2++;
 		//create Supervizorine atmintis
 		if (resourceNo == 2) {
@@ -269,7 +270,7 @@ public class PyOS {
 		
 		//create Pranesimas apie identifikuota pertraukima
 		if (resourceNo == 10) {
-			newResource = new MessageAboutIdentifiedInterrupt(id, "TaskInUserMemory", creatorID);
+			newResource = new MessageAboutIdentifiedInterrupt(id, "MessageAboutIdentifiedInterrupt", creatorID);
 		}
 		
 		
@@ -280,7 +281,7 @@ public class PyOS {
 		
 		//create Pranesimas apie pertraukima
 		if (resourceNo == 20) {
-			newResource = new MessageAboutInterrupt(id, "TaskInUserMemory", creatorID);
+			newResource = new MessageAboutInterrupt(id, "MessageAboutInterrupt", creatorID);
 		}
 		
 		//add to creators list
@@ -295,6 +296,7 @@ public class PyOS {
 		resourceAmounts[resourceNo] = 1;
 		
 		resourceList.add(newResource);
+		
 		
 	}
 	
@@ -356,6 +358,7 @@ public class PyOS {
 	public static void askForResource(ArrayList<Process> list, int resourceNo){
 		currentProcess.pState = "bl";
 		list.add(currentProcess);
+		
 		distributor(list, resourceNo, null);
 	}
 	
@@ -413,6 +416,27 @@ public class PyOS {
 			
 		}
 		planner();
+	}
+	
+	// TODO is this the correct usage of extId?
+	public static Resource findResource(ArrayList<Resource> resList, String resourceExtId) {
+		for (int i = 0; i < resList.size(); i++) {
+			Resource res = resList.get(i);
+			if (res.extID.equals(resourceExtId)) {
+				return res;
+			}
+		}
+		return null;
+	}
+	
+	public static Process findProcessByIntId(int intId) {
+		for (int i = 0; i < processList.size(); i++) {
+			Process proc = processList.get(i);
+			if (proc.intID == intId) {
+				return proc;
+			}
+		}
+		return null;
 	}
 	
 	

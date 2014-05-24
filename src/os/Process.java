@@ -15,7 +15,7 @@ public abstract class Process {
 	public String pState; //ru - running, bl - blocked, bs - blocked stopped, re - ready, rs - ready stopped
 	public ArrayList<Resource> createdResList;
 	public ArrayList<Resource> ownedResList;
-	int parentProcess;
+	public int parentProcess;
 	public ArrayList<Process> childrenList;
 	public int phase;
 	public int priority;
