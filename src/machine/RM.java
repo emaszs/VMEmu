@@ -2,7 +2,6 @@ package machine;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
-import ui.Ui;
 import memory.Word;
 
 public final class RM {
@@ -123,37 +122,37 @@ public final class RM {
 		
 		Processing.processCommand(Memory.getFromVirtualAddress(RM.ic));
 		
-		t = t-1;
-		if (t == 0) {
-			ti = 1;
-		}
+//		t = t-1;
+//		if (t == 0) {
+//			ti = 1;
+//		}
 		
-		if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0' || pi > '0' || ti > 0) {
-			if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0') {
-				if (mode == '0') {
-					mode = '1';
-				}
-				
-				if (si[0] == '9' || si[1] == '9' || si[2] == '9' || si[3] == '9') {
-					si[0] = '0';
-					si[1] = '0';
-					si[2] = '0';
-					si[3] = '0';
-					Ui.haltDetected();
-				}
-			}
-			if (ti > 0) {
-				Ui.outOfComputingTime();
-				t = 10;
-				ti = 0;
-			}
-			
-			if (pi > '0') {
-				Ui.divisionByZero();
-			}
-			
-			
-		}
+//		if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0' || pi > '0' || ti > 0) {
+//			if (si[0] > '0' || si[1] > '0' || si[2] > '0' || si[3] > '0') {
+//				if (mode == '0') {
+//					mode = '1';
+//				}
+//				
+//				if (si[0] == '9' || si[1] == '9' || si[2] == '9' || si[3] == '9') {
+//					si[0] = '0';
+//					si[1] = '0';
+//					si[2] = '0';
+//					si[3] = '0';
+//					Ui.haltDetected();
+//				}
+//			}
+//			if (ti > 0) {
+//				Ui.outOfComputingTime();
+//				t = 10;
+//				ti = 0;
+//			}
+//			
+//			if (pi > '0') {
+//				Ui.divisionByZero();
+//			}
+//			
+//			
+//		}
 	}
 	
 }

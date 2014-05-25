@@ -57,7 +57,7 @@ public class PyOS {
 	
 	
 	//Process primitives
-	public static void createProcess(int processNo, int parentProcess, String state, int priority, String extID, Resource startingResource){
+	public static void createProcess(int processNo, int parentProcess, int priority, Resource startingResource){
 		Process newProcess = null;
 		id++;
 		//creating ReadJob

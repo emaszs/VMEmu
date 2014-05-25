@@ -35,14 +35,18 @@ public class Interrupt extends Process {
 			char[] si = jobGov.savedState.si;
 			
 			if(si[0] == '1') {
-				interruptType = "WriteToFile";
+				interruptType = "WriteLineToHardDrive";
 			} else if (si[1] == '1') {
-				interruptType = "ReadFromFile";
+				interruptType = "ReadLineFromHardDrive";
 			} else if (si[2] == '1') {
-				interruptType = "OutputToPrinter";
+				interruptType = "PrintLine";
 			} else if (si[3] == '1') {
-				interruptType = "InputFromFlash";
-			}			
+				interruptType = "ReadLineFromFlash";
+			} else if (si[0] == '9' && si[1] == '9' && si[2] == '9' && si[3] == '9') {
+				interruptType = "Halt";
+			} else if (jobGov.savedState.pi != '0') {
+				interruptType = "Program";
+			}
 			phase = 2;
 		}
 		
@@ -67,10 +71,6 @@ public class Interrupt extends Process {
 			
 			
 			phase = 0;
-		}
-		
-		
-		
+		}	
 	}
-
 }

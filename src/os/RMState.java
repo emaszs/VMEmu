@@ -11,12 +11,12 @@ public class RMState {
 	public int sp = 0;
 	public int t = 0;
 	public char[] si = { '0', '0', '0', '0' }; 
-	
+	public char pi = '0';
 	public RMState() {
 		
 	}
 	
-	public void setState(Word ptp, Word r1, Word r2, int ic, char[] sf, int sp, int t, int ti, char[] si) {
+	public void setState(Word ptp, Word r1, Word r2, int ic, char[] sf, int sp, int t, int ti, char[] si, char pi) {
 		this.ptp = ptp;
 		this.r1 = r1;
 		this.r2 = r2;
@@ -25,6 +25,7 @@ public class RMState {
 		this.sp = sp;
 		this.t = t;
 		this.si = si; 
+		this.pi = pi;
 	}
 	
 }
