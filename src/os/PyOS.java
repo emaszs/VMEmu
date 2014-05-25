@@ -234,37 +234,37 @@ public class PyOS {
 		id2++;
 		//create Supervizorine atmintis
 		if (resourceNo == 2) {
-			newResource = new SupervisorMemory(id, "SupervisorMemory", creatorID);
+			newResource = new SupervisorMemory(id2, "SupervisorMemory", creatorID);
 		}
 		
 		//create Vartotojo atmintis
 		if (resourceNo == 3) {
-			newResource = new UserMemory(id, "UserMemory", creatorID);
+			newResource = new UserMemory(id2, "UserMemory", creatorID);
 		}
 		
 		//create Kietojo disko atmintis
 		if (resourceNo == 4) {
-			newResource = new SupervisorMemory(id, "HardDriveMemory", creatorID);
+			newResource = new SupervisorMemory(id2, "HardDriveMemory", creatorID);
 		}
 		
 		//create Spausdintuvas
 		if (resourceNo == 5) {
-			newResource = new Printer(id, "Printer", creatorID);
+			newResource = new Printer(id2, "Printer", creatorID);
 		}
 		
 		//create Flash irenginys
 		if (resourceNo == 6) {
-			newResource = new Flash(id, "Flash", creatorID);
+			newResource = new Flash(id2, "Flash", creatorID);
 		}
 		
 		//create Uzduotis kietajame diske
 		if (resourceNo == 7) {
-			newResource = new TaskInHardDrive(id, "TaskInHardDrive", creatorID);
+			newResource = new TaskInHardDrive(id2, "TaskInHardDrive", creatorID);
 		}
 		
 		//create Uzduotis vartotojo atmintyje
 		if (resourceNo == 9) {
-			newResource = new TaskInUserMemory(id, "TaskInUserMemory", creatorID);
+			newResource = new TaskInUserMemory(id2, "TaskInUserMemory", creatorID);
 		}
 		
 		//create Pranesimas apie identifikuota pertraukima
@@ -417,7 +417,7 @@ public class PyOS {
 		planner();
 	}
 	
-	// TODO is this the correct usage of extId?
+	// TODO is this the correct usage of extId? - it's better to use intID
 	public static Resource findResource(ArrayList<Resource> resList, String resourceExtId) {
 		for (int i = 0; i < resList.size(); i++) {
 			Resource res = resList.get(i);

@@ -62,7 +62,7 @@ public class JobGovernor extends Process {
 		
 		//5 stop VM process
 		if ((phase == 5) && (pState.equals("ru"))) {
-			//TODO jobGov should contain only one child VM process (?)
+			//TODO jobGov should contain only one child VM process (?) yes, cause every task has its own JobGovernor which has its own VM
 			PyOS.stopProcess(this.childrenList.get(0).intID);
 			phase = 6;
 		}
