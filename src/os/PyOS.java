@@ -11,6 +11,7 @@ import res.TaskInHardDrive;
 import res.TaskInUserMemory;
 import res.UserMemory;
 import res.MessageAboutInterrupt;
+import res.MessageAboutIdentifiedInterrupt;
 
 public class PyOS {
 	public static ArrayList<Process> processList = new ArrayList<Process>();
@@ -153,10 +154,10 @@ public class PyOS {
 		for (int i = 1; i <= resListSize; i++) {
 			deleteResource(processToDelete.createdResList.get(0).intID);
 		}
-		resListSize = processToDelete.ownedResList.size();
-		for (int i = 1; i <= resListSize; i++) {
-			deleteResource(processToDelete.ownedResList.get(0).intID);
-		}
+		//resListSize = processToDelete.ownedResList.size();
+		//for (int i = 1; i <= resListSize; i++) {
+		//	deleteResource(processToDelete.ownedResList.get(0).intID);
+		//}
 		
 		
 		
@@ -292,7 +293,7 @@ public class PyOS {
 			}
 		}
 		processList.get(listIndex).createdResList.add(newResource);
-		resourceAmounts[resourceNo] = 1;
+		//resourceAmounts[resourceNo] = 1;
 		
 		resourceList.add(newResource);
 		
@@ -392,32 +393,56 @@ public class PyOS {
 	public static void distributor(ArrayList<Process> list, int resourceNumber, Resource distributableResource) {
 		
 		if ((list.size() != 0) && (resourceAmounts[resourceNumber] != 0)) {
-			Process processToGetResource = list.get(0);
-			processToGetResource.receivedResource = resourceNumber;
-			processToGetResource.neededResource = 0;
-			if (processToGetResource.pState.equals("bs")) {
-				processToGetResource.pState = "rs";
-			} else {
+			
+			Process processToGetResource;
+			
+			if (resourceNumber == 10) {
+				//Find job gov
+				int listIndex = 0;
+				int listSize = list.size();
+				MessageAboutIdentifiedInterrupt message = (MessageAboutIdentifiedInterrupt)distributableResource;
+				for (int i = 1; i <= listSize; i++) {
+					if (list.get(i-1).intID == message.jobGovernorResponsibleForInt) {
+						listIndex = i-1;
+					}
+				}
+				//TODO paskirti resursa
+				
+				processToGetResource = list.get(listIndex);
+				processToGetResource.receivedResource = resourceNumber;
+				processToGetResource.neededResource = 0;
+				processToGetResource.ownedResList.add(message);
+				message.user = processToGetResource;
+				list.remove(listIndex);
+				readyProcesses.add(processToGetResource);
 				processToGetResource.pState = "re";
+				
+			} else {
+				
+				processToGetResource = list.get(0);
+				processToGetResource.receivedResource = resourceNumber;
+				processToGetResource.neededResource = 0;
+				if (processToGetResource.pState.equals("bs")) {
+					processToGetResource.pState = "rs";
+				} else {
+					processToGetResource.pState = "re";
+				}
+				
+				list.remove(0);
+				readyProcesses.add(processToGetResource);
+				
+				// if not a message
+				if (((resourceNumber >= 2) && (resourceNumber <= 10) && (resourceNumber !=8)) || (resourceNumber == 19) || (resourceNumber == 20)) {
+					processToGetResource.ownedResList.add(distributableResource);
+					distributableResource.user = processToGetResource;
+				}
 			}
-			
-			
-			list.remove(0);
-			readyProcesses.add(processToGetResource);
-		
-			// if not a message
-			if (((resourceNumber >= 2) && (resourceNumber <= 10) && (resourceNumber !=8)) || (resourceNumber == 19) || (resourceNumber == 20)) {
-				processToGetResource.ownedResList.add(distributableResource);
-				distributableResource.user = processToGetResource;
-			}
-			
 			resourceAmounts[resourceNumber]--;
-			
 		}
 		planner();
 	}
 	
-	// TODO is this the correct usage of extId? - it's better to use intID
+	// TODO is this the correct usage of extId?
 	public static Resource findResource(ArrayList<Resource> resList, String resourceExtId) {
 		for (int i = 0; i < resList.size(); i++) {
 			Resource res = resList.get(i);
