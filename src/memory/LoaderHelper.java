@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import machine.Memory;
 
-public class Loader {
+public class LoaderHelper {
 	public static String[] cmdRegexes = { "LR\\d{2}", "SR\\d{2}", "PUSR",
 			"POPR", "A1\\d{2}", "A2\\d{2}", "S1\\d{2}", "S2\\d{2}", "ML\\d{2}",
 			"DV\\d{2}", "MOVE", "CM\\d{2}", "JP\\d{2}", "JE\\d{2}", "JL\\d{2}",

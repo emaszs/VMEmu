@@ -1,6 +1,13 @@
 package os;
+
+import java.io.IOException;
+
+import memory.Hdd;
+import ui.OSUI;
+
 //TODO
 public class ReadJob extends Process {
+	public int filesInUse = 0;
 	
 	public ReadJob(int intID, String extID, int parentProcess, int priority, String startState) {
 		super(intID, extID, parentProcess, priority, startState); 
@@ -21,33 +28,46 @@ public class ReadJob extends Process {
 			phase = 2;
 		}
 		
-		//3-4) reads task to supervisor Memory, asks for hard drive memory
+		//3)asks for hard drive memory
 		//TODO
 		if ((phase == 2) && (receivedResource == 2) && (pState.equals("ru"))) {	
-			
-			
-			
-			
-			
+		
 			PyOS.askForResource(PyOS.waitingList4, 4);
 			neededResource = 4;
 			phase = 3;
 		}
 		
-		//5-6) copies task to hard drive memmory, frees Flash resource
+		//4) copies task to hard drive memmory
 		//TODO
 		if ((phase == 3) && (receivedResource == 4) && (pState.equals("ru"))) {	
 			neededResource = 0;
 			
+			String line = new String();
 			
+			do {
+				try {
+					line = OSUI.flash.readLine();
+					Hdd.writeToFile(filesInUse, line);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			} while (!line.equals("$END"));
+			filesInUse++;
+			Hdd.initFiles();
 			
 			
 			PyOS.freeResource(PyOS.waitingList6, 6, ownedResList.get(0));
 			phase = 4;
 		}
 		
+		//5 TODO free flash, hard drive resources
+		if (phase == 4) {
+			
+		}
+		
 		//7) creates resource task in hard drive
-		//TODO reikes papildyti
+		//TODO resource should contain fileId
 		if ((phase == 4) && (pState.equals("ru"))) {
 			
 			
@@ -55,8 +75,5 @@ public class ReadJob extends Process {
 			PyOS.freeResource(PyOS.waitingList7, 7, createdResList.get(createdResList.size()-1));
 			phase = 0;
 		}
-		
-		
 	}
-	
 }

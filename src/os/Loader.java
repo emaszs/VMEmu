@@ -1,4 +1,5 @@
 package os;
+
 //TODO
 public class Loader extends Process {
 	
@@ -6,7 +7,7 @@ public class Loader extends Process {
 		super(intID, extID, parentProcess, priority, startState); 
 	}
 	
-	public void run() {
+	public void run(){
 		
 		//1) asks for message from job governor
 		if ((phase == 0) && (pState.equals("ru"))) {	
@@ -34,12 +35,7 @@ public class Loader extends Process {
 		//4-5) loads program and frees Task in user memory resource
 		//TODO
 		if ((phase == 3) && (receivedResource == 3) && (pState.equals("ru"))) {	
-			
-			
-			
-			
-			
-			
+
 			
 			//Nuspresk, ar Task in user memory tures svarios info
 			//PyOS.freeResource(PyOS.waitingList9, 9, ownedResList.get(0));

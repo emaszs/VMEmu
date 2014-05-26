@@ -56,7 +56,6 @@ public class Interrupt extends Process {
 					"MessageAboutIdentifiedInterrupt", this.intID, interruptType, jobGovernorResponsibleForInt);
 
 			this.createdResList.add(newResource);
-			//TODO ?? why this array?
 			PyOS.resourceAmounts[10]++;		
 			PyOS.resourceList.add(newResource);
 		}

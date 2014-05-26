@@ -9,7 +9,7 @@ import machine.RM;
 public class Hdd {
 	public static final int FILE_LENGTH = 10;
 	public static final int FILE_NUM = 3;
-	public static final String REAL_FILE_LOC = "C:/Users/user/Desktop/hdd.txt";
+	public static final String REAL_FILE_LOC = "C:/Users/Emilis/Desktop/hdd.txt";
 	public static FileInfo[] fileList = new FileInfo[3];
 
 	public static void seekCursor(int fileNum, int lineNum) {
@@ -93,5 +93,35 @@ public class Hdd {
 			}
 		}
 		return null;
+	}
+	
+	public static String readProgramFromFile(int fileNum) {
+		
+		File file = new File(REAL_FILE_LOC);
+		String line = "$END";
+		String result = new String();
+		RandomAccessFile access;
+		
+		do {
+			
+			try {
+				access = new RandomAccessFile(file, "rw");
+		
+			int cursor = fileList[fileNum].cursorPosition;
+			access.seek(cursor);
+			line = access.readLine();
+			result = result + line + "\n";
+			fileList[fileNum].cursorPosition += RM.WORD_SIZE + 2; // newline
+																	// symbols
+																	// - +2
+			access.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} while (!line.equals("$END"));
+			
+		
+		return result;
 	}
 }

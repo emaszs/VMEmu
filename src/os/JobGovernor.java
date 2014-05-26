@@ -14,7 +14,7 @@ public class JobGovernor extends Process {
 	
 	public void run() {
 		
-		//0) asks for User memory
+		//1) asks for User memory
 		if ((phase == 0) && (pState.equals("ru"))) {	
 			PyOS.askForResource(PyOS.waitingList3, 3);
 			neededResource = 3;
@@ -22,7 +22,7 @@ public class JobGovernor extends Process {
 		}
 		
 		
-		//1) frees message from JobGovernor
+		//2) frees message from JobGovernor
 		if ((phase == 1) && (receivedResource == 3) && (pState.equals("ru"))) {
 			neededResource = 0;
 			PyOS.freeResource(PyOS.waitingList8, 8, null);
@@ -30,7 +30,7 @@ public class JobGovernor extends Process {
 		}
 		
 		
-		//2) asks for Task in user memory
+		//3) asks for Task in user memory
 		if ((phase == 2) && (pState.equals("ru"))) {	
 			PyOS.askForResource(PyOS.waitingList9, 9);
 			neededResource = 9;
@@ -39,7 +39,7 @@ public class JobGovernor extends Process {
 		
 		
 		
-		//3) creates VirtualMachine
+		//4) creates VirtualMachine
 		//TODO
 		if ((phase == 3) && (receivedResource == 9) && (pState.equals("ru"))) {
 			neededResource = 0;
@@ -53,21 +53,21 @@ public class JobGovernor extends Process {
 		
 		
 		
-		//4) asks for Message about identified interrupt 
+		//5) asks for Message about identified interrupt 
 		if ((phase == 4) && (pState.equals("ru"))) {	
 			PyOS.askForResource(PyOS.waitingList10, 10);
 			neededResource = 9;
 			phase = 5;
 		}
 		
-		//5 stop VM process
+		//6) stop VM process
 		if ((phase == 5) && (pState.equals("ru"))) {
 			//TODO jobGov should contain only one child VM process (?) yes, cause every task has its own JobGovernor which has its own VM
 			PyOS.stopProcess(this.childrenList.get(0).intID);
 			phase = 6;
 		}
 		
-		//6 process interrupt by calling other procs or halting VM
+		//7 process interrupt by calling other procs or halting VM
 		if ((phase == 6) && (pState.equals("ru"))) {	
 			MessageAboutIdentifiedInterrupt msg = (MessageAboutIdentifiedInterrupt) 
 					PyOS.findResource(this.ownedResList, "MessageAboutIdentifiedInterrupt");
@@ -93,7 +93,6 @@ public class JobGovernor extends Process {
 		}
 		
 	
-		//6-7) stops VM, check interrupt
 		//TODO
 		if ((phase == 6) && (receivedResource == 10) && (pState.equals("ru"))) {	
 
