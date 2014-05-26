@@ -2,6 +2,7 @@ package os;
 
 import java.io.IOException;
 
+import machine.RM;
 import res.LineInMemory;
 import ui.OSUI;
 
@@ -50,6 +51,9 @@ public class PrintLine extends Process {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			RM.r1.setInt(RM.r1.getInt() + 1);
+			RM.r2.setInt(RM.r2.getInt() - 1); // one iteration complete
 
 			PyOS.freeResource(PyOS.waitingList5, 5,
 					ownedResList.get(ownedResList.size() - 1));

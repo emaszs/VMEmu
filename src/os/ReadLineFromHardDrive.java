@@ -47,6 +47,9 @@ public class ReadLineFromHardDrive extends Process {
 
 			Memory.writeToVirtualAddress(adrToWrite, line);
 
+			RM.r1.setInt(RM.r1.getInt() + 1);
+			RM.r2.setInt(RM.r2.getInt() - 1); // one iteration complete
+
 			PyOS.freeResource(PyOS.waitingList4, 4, ownedResList.get(0));
 			phase = 4;
 		}

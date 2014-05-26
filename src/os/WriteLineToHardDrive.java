@@ -1,5 +1,6 @@
 package os;
 
+import machine.RM;
 import memory.Hdd;
 import res.HardDriveMemory;
 import res.LineInMemory;
@@ -48,6 +49,9 @@ public class WriteLineToHardDrive extends Process {
 					ownedResList, "HardDriveMemory");
 
 			Hdd.writeToFile(hdMem.fileId, lineMem.line);
+
+			RM.r1.setInt(RM.r1.getInt() + 1);
+			RM.r2.setInt(RM.r2.getInt() - 1); // one iteration complete
 
 			PyOS.freeResource(PyOS.waitingList4, 4,
 					ownedResList.get(ownedResList.size() - 1));

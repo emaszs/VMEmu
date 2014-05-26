@@ -44,6 +44,9 @@ public class ReadLineFromFlash extends Process {
 					"LineInMemory")).line;
 			Memory.writeToVirtualAddress(adrToWrite, valToWrite);
 
+			RM.r1.setInt(RM.r1.getInt() + 1);
+			RM.r2.setInt(RM.r2.getInt() - 1); // one iteration complete
+
 			PyOS.freeResource(PyOS.waitingList6, 6, ownedResList.get(0));
 			phase = 4;
 		}

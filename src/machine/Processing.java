@@ -1,8 +1,7 @@
 package machine;
 
-import java.io.IOException;
-
 import memory.Hdd;
+import os.PyOS;
 
 public class Processing {
 	public static void processCommand(String cmd) {
@@ -249,20 +248,6 @@ public class Processing {
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				// RM.reduceTimer();
-
-				// if (isNumeric(RM.r1.getString()) && counter != 0) {
-				// int adrToWriteFrom = RM.r1.getInt();
-				// String valToWrite;
-				// try {
-				// valToWrite = Memory.getFromVirtualAddress(adrToWriteFrom);
-				// RM.printer.write(valToWrite + "\n");
-				// RM.r1.setInt(RM.r1.getInt() + 1);
-				// RM.r2.setInt(counter - 1); // one iteration complete
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
-				// }
 			}
 			// if output continued
 			else if (RM.chstPrinter == 1
@@ -271,17 +256,18 @@ public class Processing {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToWriteFrom = RM.r1.getInt();
-					String valToWrite;
-					try {
-						valToWrite = Memory
-								.getFromVirtualAddress(adrToWriteFrom);
-						RM.printer.write(valToWrite + "\n");
-						RM.r1.setInt(RM.r1.getInt() + 1);
-						RM.r2.setInt(counter - 1); // one iteration complete
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					// int adrToWriteFrom = RM.r1.getInt();
+					// String valToWrite;
+					// try {
+					// valToWrite = Memory
+					// .getFromVirtualAddress(adrToWriteFrom);
+					// RM.printer.write(valToWrite + "\n");
+					// RM.r1.setInt(RM.r1.getInt() + 1);
+					// RM.r2.setInt(counter - 1); // one iteration complete
+					// } catch (IOException e) {
+					// e.printStackTrace();
+					// }
+					PyOS.freeResource(PyOS.waitingList20, 20, null);
 				}
 
 				// if output is finished
@@ -305,18 +291,6 @@ public class Processing {
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				// if (isNumeric(RM.r1.getString()) && counter != 0) {
-				// int adrToWrite = Integer.parseInt(RM.r1.getString());
-				// String valToWrite;
-				// try {
-				// valToWrite = RM.flash.readLine();
-				// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
-				// RM.r1.setInt(RM.r1.getInt() + 1);
-				// RM.r2.setInt(counter - 1); // one iteration complete
-				// } catch (IOException e) {
-				// e.printStackTrace();
-				// }
-				// }
 			}
 			// if input continued
 			else if (RM.chstFlash == 1
@@ -325,16 +299,18 @@ public class Processing {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToWrite = Integer.parseInt(RM.r1.getString());
-					String valToWrite;
-					try {
-						valToWrite = RM.flash.readLine();
-						Memory.writeToVirtualAddress(adrToWrite, valToWrite);
-						RM.r1.setInt(RM.r1.getInt() + 1);
-						RM.r2.setInt(counter - 1); // one iteration complete
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					// int adrToWrite = Integer.parseInt(RM.r1.getString());
+					// String valToWrite;
+					// try {
+					// valToWrite = RM.flash.readLine();
+					// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
+					// RM.r1.setInt(RM.r1.getInt() + 1);
+					// RM.r2.setInt(counter - 1); // one iteration complete
+					// } catch (IOException e) {
+					// e.printStackTrace();
+					// }
+
+					PyOS.freeResource(PyOS.waitingList20, 20, null);
 				}
 				// if input is finished
 				if (RM.chstFlash == 1 && RM.r2.getInt() == 0) {
@@ -366,7 +342,7 @@ public class Processing {
 		} else if (cmd.matches("W\\d\\d\\d")) { // write to file n XY lines from
 												// address R1, counter in R2
 			int counter = 0;
-			int fileNum = Integer.parseInt(cmd.substring(1, 2));
+			// int fileNum = Integer.parseInt(cmd.substring(1, 2));
 			// if input is just starting
 			if (RM.chstHdd == 0 && RM.sm == 0) {
 				RM.sm = 1;
@@ -376,16 +352,6 @@ public class Processing {
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				// RM.reduceTimer();
-
-				// if (isNumeric(RM.r1.getString()) && counter != 0) {
-				// int adrToReadFrom = Integer.parseInt(RM.r1.getString());
-				// String valToWrite;
-				// valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
-				// Hdd.writeToFile(fileNum, valToWrite);
-				// RM.r1.setInt(RM.r1.getInt() + 1);
-				// RM.r2.setInt(counter - 1); // one iteration complete
-				// }
 			}
 			// if input continued
 			else if (RM.chstHdd == 1
@@ -394,12 +360,17 @@ public class Processing {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToReadFrom = Integer.parseInt(RM.r1.getString());
-					String valToWrite;
-					valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
-					Hdd.writeToFile(fileNum, valToWrite);
-					RM.r1.setInt(RM.r1.getInt() + 1);
-					RM.r2.setInt(counter - 1); // one iteration complete
+					// TODO move code to WriteLineToHardDrive process
+
+					// int adrToReadFrom = Integer.parseInt(RM.r1.getString());
+					// String valToWrite;
+					// valToWrite = Memory.getFromVirtualAddress(adrToReadFrom);
+					// Hdd.writeToFile(fileNum, valToWrite);
+					// RM.r1.setInt(RM.r1.getInt() + 1);
+					// RM.r2.setInt(counter - 1); // one iteration complete
+
+					// freeing msg about int
+					PyOS.freeResource(PyOS.waitingList20, 20, null);
 				}
 
 				// if input is finished
@@ -414,7 +385,7 @@ public class Processing {
 			}
 		} else if (cmd.matches("R\\d\\d\\d")) { // read from file n XY lines to
 			int counter = 0;
-			int fileNum = Integer.parseInt(cmd.substring(1, 2));
+			// int fileNum = Integer.parseInt(cmd.substring(1, 2));
 			// if input is just starting
 			if (RM.chstHdd == 0 && RM.sm == 0) {
 				RM.sm = 1;
@@ -424,16 +395,6 @@ public class Processing {
 				counter = Integer.parseInt(cmd.substring(2, 4));
 				RM.r2.setString(cmd.substring(2, 4));
 
-				// RM.reduceTimer();
-
-				// if (isNumeric(RM.r1.getString()) && counter != 0) {
-				// int adrToWrite = Integer.parseInt(RM.r1.getString());
-				// String valToWrite;
-				// valToWrite = Hdd.readFromFile(fileNum);
-				// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
-				// RM.r1.setInt(RM.r1.getInt() + 1);
-				// RM.r2.setInt(counter - 1); // one iteration complete
-				// }
 			}
 			// if input continued
 			else if (RM.chstHdd == 1
@@ -442,12 +403,13 @@ public class Processing {
 				counter = RM.r2.getInt();
 
 				if (isNumeric(RM.r1.getString()) && counter != 0) {
-					int adrToWrite = Integer.parseInt(RM.r1.getString());
-					String valToWrite;
-					valToWrite = Hdd.readFromFile(fileNum);
-					Memory.writeToVirtualAddress(adrToWrite, valToWrite);
-					RM.r1.setInt(RM.r1.getInt() + 1);
-					RM.r2.setInt(counter - 1); // one iteration complete
+					// int adrToWrite = Integer.parseInt(RM.r1.getString());
+					// String valToWrite;
+					// valToWrite = Hdd.readFromFile(fileNum);
+					// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
+					// RM.r1.setInt(RM.r1.getInt() + 1);
+					// RM.r2.setInt(counter - 1); // one iteration complete
+					PyOS.freeResource(PyOS.waitingList20, 20, null);
 				}
 
 				// if input is finished
@@ -465,9 +427,7 @@ public class Processing {
 			for (int i = 0; i < RM.si.length; i++) {
 				RM.si[i] = '9';
 			}
-
 		}
-
 	}
 
 	public static boolean isNumeric(String str) {
