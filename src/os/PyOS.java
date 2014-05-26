@@ -599,4 +599,38 @@ public class PyOS {
 		return list;
 	}
 
+	public static int findChildrenListIndex(int intID) {
+		// find in list
+		int listIndex = 0;
+		int listSize = processList.size();
+		for (int i = 1; i <= listSize; i++) {
+			if (processList.get(i - 1).intID == intID) {
+				listIndex = i - 1;
+			}
+		}
+
+		Process process = processList.get(listIndex);
+
+		// find parent
+		int listIndex2 = 0;
+		listSize = processList.size();
+		for (int i = 1; i <= listSize; i++) {
+			if (processList.get(i - 1).intID == process.parentProcess) {
+				listIndex2 = i - 1;
+			}
+		}
+		// remove
+		Process parent = processList.get(listIndex2);
+
+		// find child index
+		int listIndex3 = 0;
+		listSize = parent.childrenList.size();
+		for (int i = 1; i <= listSize; i++) {
+			if (parent.childrenList.get(i - 1).intID == intID) {
+				listIndex3 = i - 1;
+			}
+		}
+
+		return listIndex3;
+	}
 }
