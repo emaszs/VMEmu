@@ -20,7 +20,7 @@ public class PyOS {
 	public static ArrayList<Process> readyProcesses = new ArrayList<Process>();
 	public static Process currentProcess = null;
 	public static int id = 0; // process inner number
-	public static int id2 = 0; // resource inned number
+	public static int id2 = 0; // resource inner number
 
 	public static int timer = 10;
 
@@ -293,6 +293,7 @@ public class PyOS {
 		// create Vartotojo atmintis
 		if (resourceNo == 3) {
 			newResource = new UserMemory(id2, "UserMemory", creatorID);
+			resourceAmounts[resourceNo] = 50;
 		}
 
 		// create Kietojo disko atmintis
