@@ -48,6 +48,21 @@ public class PyOS {
 	
 	public static int[] resourceAmounts = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};// 0 index unused
 	
+	public static ArrayList<Resource> elementList2 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList3 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList4 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList5 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList6 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList7 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList9 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList10 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList19 = new ArrayList<Resource>();
+	public static ArrayList<Resource> elementList20 = new ArrayList<Resource>();
+	
+	
+	
+	
+	
 	
 //	public static void main(final String[] args) {
 //		
@@ -350,16 +365,42 @@ public class PyOS {
 				}
 			}
 			freedResource.user.ownedResList.remove(listIndex);
+			freedResource.user = null;
+			ArrayList<Resource> resList = getResourceList(resourceNo);
+			resList.add(freedResource);
 		}
 		
-		distributor(list, resourceNo, freedResource);
+		distributor(list, resourceNo);
+		
+		
+		//resourceAmounts[resourceNo]++;
+		//if (freedResource != null) {
+			//Find last user
+			//int listIndex = 0;
+			//int listSize = freedResource.user.ownedResList.size();
+			//for (int i = 1; i <= listSize; i++) {
+				//if (freedResource.user.ownedResList.get(i-1).intID == freedResource.intID) {
+					//listIndex = i-1;
+				//}
+			//}
+			//freedResource.user.ownedResList.remove(listIndex);
+		//}
+		
+		//distributor(list, resourceNo);
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void askForResource(ArrayList<Process> list, int resourceNo){
 		currentProcess.pState = "bl";
 		list.add(currentProcess);
 		
-		distributor(list, resourceNo, null);
+		distributor(list, resourceNo);
 	}
 	
 	//Planner
@@ -390,13 +431,17 @@ public class PyOS {
 	}
 	
 	//Resource distributor
-	public static void distributor(ArrayList<Process> list, int resourceNumber, Resource distributableResource) {
+	public static void distributor(ArrayList<Process> list, int resourceNumber) {
 		
 		if ((list.size() != 0) && (resourceAmounts[resourceNumber] != 0)) {
 			
 			Process processToGetResource;
+			ArrayList<Resource> ResList;
 			
 			if (resourceNumber == 10) {
+				ResList = getResourceList(resourceNumber);
+				Resource distributableResource = ResList.get(0);
+				ResList.remove(0);
 				//Find job gov
 				int listIndex = 0;
 				int listSize = list.size();
@@ -406,7 +451,6 @@ public class PyOS {
 						listIndex = i-1;
 					}
 				}
-				//TODO paskirti resursa
 				
 				processToGetResource = list.get(listIndex);
 				processToGetResource.receivedResource = resourceNumber;
@@ -433,6 +477,9 @@ public class PyOS {
 				
 				// if not a message
 				if (((resourceNumber >= 2) && (resourceNumber <= 10) && (resourceNumber !=8)) || (resourceNumber == 19) || (resourceNumber == 20)) {
+					ResList = getResourceList(resourceNumber);
+					Resource distributableResource = ResList.get(0);
+					ResList.remove(0);
 					processToGetResource.ownedResList.add(distributableResource);
 					distributableResource.user = processToGetResource;
 				}
@@ -462,6 +509,38 @@ public class PyOS {
 		}
 		return null;
 	}
+	
+	//Returns resource element list
+	public static ArrayList<Resource> getResourceList(int resourceNo) {
+		
+		ArrayList<Resource> list = null;
+		
+		 switch (resourceNo) {
+         case 2:  list = elementList2;
+                  break;
+         case 3:  list = elementList3;
+                  break;
+         case 4:  list = elementList4;
+                  break;
+         case 5:  list = elementList5;
+                  break;
+         case 6:  list = elementList6;
+                  break;
+         case 7:  list = elementList7;
+                  break;
+         case 9:  list = elementList9;
+                  break;
+         case 10: list = elementList10;
+                  break;
+         case 19: list = elementList19;
+                  break;
+         case 20: list = elementList20;
+                  break;
+     }
+		
+		return list;
+	}
+	
 	
 	
 }
