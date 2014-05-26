@@ -24,10 +24,22 @@ public class MainProc extends Process {
 			if (((TaskInHardDrive) PyOS.findResource(ownedResList,
 					"TaskInHardDrive")).computingTime == 0) {
 				// TODO getting latest received TaskInHardDrive resource?
-				int jobGovToDeleteId = ownedResList
-						.get(ownedResList.size() - 1).intID;
-				// TODO childrenListIndex???
-				PyOS.deleteProcess(jobGovToDeleteId, childrenListIndex);
+				int jobGovToBeDeletedId = ownedResList
+						.get(ownedResList.size() - 1).creatorProcess;
+
+				int jobGovChildIndex = -1;
+
+				for (int i = 0; i < this.childrenList.size(); i++) {
+					if (this.childrenList.get(i).intID == jobGovToBeDeletedId) {
+						jobGovChildIndex = i;
+					}
+				}
+
+				if (jobGovChildIndex == -1) {
+					System.out.println("did not find a jobGovernor to delete");
+				} else {
+					PyOS.deleteProcess(jobGovToBeDeletedId, jobGovChildIndex);
+				}
 			} else {
 				PyOS.createProcess(10, intID, 50,
 						ownedResList.get(ownedResList.size() - 1));
@@ -42,5 +54,4 @@ public class MainProc extends Process {
 			phase = 0;
 		}
 	}
-
 }
