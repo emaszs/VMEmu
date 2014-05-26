@@ -1,7 +1,7 @@
 package machine;
+
 import memory.Block;
 import memory.Word;
-
 
 public class Memory {
 
@@ -9,9 +9,9 @@ public class Memory {
 	public static Block[] memory = new Block[RM.MEMORY_SIZE];
 
 	// Stores information about which blocks are in use by VMs.
-	public boolean[] allocatedBlocks = new boolean[RM.MEMORY_SIZE];
+	public static boolean[] allocatedBlocks = new boolean[RM.MEMORY_SIZE];
 
-	public void initMemory() {
+	public static void initMemory() {
 
 		for (int i = 0; i < RM.MEMORY_SIZE; i++) {
 			memory[i] = new Block();
@@ -22,11 +22,11 @@ public class Memory {
 		}
 	}
 
-	public void printMemory() {
-		this.printMemory(0, RM.MEMORY_SIZE);
+	public static void printMemory() {
+		printMemory(0, RM.MEMORY_SIZE);
 	}
 
-	public void printMemory(final int startIdx, final int endIdx) {
+	public static void printMemory(final int startIdx, final int endIdx) {
 		for (int i = startIdx; i < endIdx; i++) {
 			String line = new String();
 			for (int j = 0; j < RM.BLOCK_SIZE; j++) {
@@ -36,13 +36,13 @@ public class Memory {
 		}
 	}
 
-	public void initAllocationInfo() {
+	public static void initAllocationInfo() {
 		for (int i = 0; i < RM.MEMORY_SIZE; i++) {
 			allocatedBlocks[i] = false;
 		}
 	}
 
-	public void initSupervisorAllocationInfo() {
+	public static void initSupervisorAllocationInfo() {
 		int startIdx = RM.MEMORY_SIZE - RM.SUPERVISOR_SIZE;
 		int endIdx = RM.MEMORY_SIZE;
 		for (int i = startIdx; i < endIdx; i++) {
@@ -50,7 +50,7 @@ public class Memory {
 		}
 	}
 
-	public int getNumFreeBlocks() {
+	public static int getNumFreeBlocks() {
 		int num = 0;
 		for (int i = 0; i < RM.MEMORY_SIZE; i++) {
 			if (allocatedBlocks[i] == false) {
@@ -60,7 +60,7 @@ public class Memory {
 		return num;
 	}
 
-	public void allocateBlock(final int idx) {
+	public static void allocateBlock(final int idx) {
 		allocatedBlocks[idx] = true;
 	}
 
@@ -68,7 +68,7 @@ public class Memory {
 	 * Finds a number of free random blocks in memory, allocates them to the VM
 	 * and fills out it's page table accordingly.
 	 */
-	public void allocateNumBlocksToVM(final int numBlocksToAllocate) {
+	public static void allocateNumBlocksToVM(final int numBlocksToAllocate) {
 
 		int numSuccAllocated = 0;
 		int pageTableCounter = 0;
@@ -123,12 +123,12 @@ public class Memory {
 			}
 			pageTableCounter++;
 			numSuccAllocated++;
-			
+
 			RM.sp = 99;
 		}
 	}
 
-	public void allocatePageTableToVM() {
+	public static void allocatePageTableToVM() {
 		// Find free block in supervisor memory
 		boolean blockFound = false;
 		for (int i = RM.MEMORY_SIZE - RM.SUPERVISOR_SIZE; i < RM.MEMORY_SIZE; i++) {
@@ -147,7 +147,7 @@ public class Memory {
 	public static String getFromRealAddress(int realAdr) {
 		return memory[realAdr / 10].getWord(realAdr % 10).getString();
 	}
-	
+
 	public static String getFromVirtualAddress(int virtualAdr) {
 
 		int realAdr = translateFromVirtualToReal(virtualAdr);
@@ -178,5 +178,4 @@ public class Memory {
 		writeToRealAddress(realAdr, val);
 	}
 
-	
 }
