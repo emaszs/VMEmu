@@ -14,7 +14,7 @@ public class StartStop extends Process {
 		//TODO
 		if (phase == 0) {
 			//System resource initialization
-			
+			PyOS.createResource(resourceNo, creatorID);
 			
 			
 			
