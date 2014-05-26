@@ -1,4 +1,7 @@
 package os;
+
+import res.TaskInHardDrive;
+
 //TODO
 public class MainProc extends Process {
 	
@@ -16,8 +19,21 @@ public class MainProc extends Process {
 		}
 		
 		//2-4) deleting or creating jobGovernor
+		if (phase == 1) {
+			if (((TaskInHardDrive)PyOS.findResource(PyOS.currentProcess.ownedResList, "TaskInHardDrive")).computingTime == 0) {
+				//TODO getting latest received TaskInHardDrive resource?
+				int jobGovToDeleteId = PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size() - 1).intID;
+				//TODO childrenListIndex???
+				PyOS.deleteProcess(jobGovToDeleteId, childrenListIndex);
+			} else {
+				PyOS.createProcess(10, PyOS.currentProcess.intID, 50, PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size() - 1));
+			}
+			phase = 2;
+		}
+		
+		
 		//TODO
-		if ((phase == 0) && (receivedResource == 7) && (pState.equals("ru"))) {
+		if ((phase == 2) && (receivedResource == 7) && (pState.equals("ru"))) {
 			neededResource = 0;
 
 			
