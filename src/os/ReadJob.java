@@ -49,7 +49,9 @@ public class ReadJob extends Process {
 			do {
 				try {
 					line = OSUI.flash.readLine();
+					Hdd.openFileForWriting(filesInUse);
 					Hdd.writeToFile(filesInUse, line);
+					Hdd.closeFile(filesInUse);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

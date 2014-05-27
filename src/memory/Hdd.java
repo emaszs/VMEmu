@@ -7,9 +7,9 @@ import java.io.RandomAccessFile;
 import machine.RM;
 
 public class Hdd {
-	public static final int FILE_LENGTH = 10;
+	public static final int FILE_LENGTH = 30;
 	public static final int FILE_NUM = 3;
-	public static final String REAL_FILE_LOC = "C:/Users/Tomas/Desktop/hdd.txt";
+	public static final String REAL_FILE_LOC = "C:/Users/user/Desktop/hdd.txt";
 	public static FileInfo[] fileList = new FileInfo[3];
 
 	public static void seekCursor(int fileNum, int lineNum) {
@@ -22,8 +22,8 @@ public class Hdd {
 			
 			seekCursor(i, i * 10);
 
-			fileList[i].fileIsOpenForWriting = false;
-			fileList[i].fileIsOpenForReading = false;
+			fileList[i].fileIsOpenForWriting = true;
+			fileList[i].fileIsOpenForReading = true;
 			fileList[i].fileIsBeingWrittenTo = false;
 			fileList[i].fileIsBeingReadFrom = false;
 		}
@@ -46,8 +46,8 @@ public class Hdd {
 	}
 
 	public static void writeToFile(int fileNum, String val) {
-		if (fileList[fileNum].fileIsOpenForWriting
-				&& !fileList[fileNum].fileIsBeingWrittenTo) {
+		System.out.println(fileList[fileNum].fileLocation);
+		if (fileList[fileNum].fileIsOpenForWriting && !fileList[fileNum].fileIsBeingWrittenTo) {
 
 			File file = new File(REAL_FILE_LOC);
 			RandomAccessFile access;
