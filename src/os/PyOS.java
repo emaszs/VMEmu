@@ -98,7 +98,6 @@ public class PyOS {
 	//
 	// processList.add(new StartStop(1, "StartStop", 0, 100, "re"));
 	// id = 1;
-	// //TODO rest
 	// }
 
 	// Process primitives
@@ -202,8 +201,7 @@ public class PyOS {
 
 		}
 
-		// deleting created and owned resources
-		// ar reikia naikinti turimu resursu deskriptorius?
+		// deleting created
 		int resListSize = processToDelete.createdResList.size();
 		for (int i = 1; i <= resListSize; i++) {
 			deleteResource(processToDelete.createdResList.get(0).intID);
@@ -282,7 +280,6 @@ public class PyOS {
 	// Resource primitives
 	public static void createResource(int resourceNo, int creatorID) {
 		Resource newResource = null;
-		// TODO WTF ID? id is used instead of id2 for creation of all resources
 		id2++;
 		// create Supervizorine atmintis
 		if (resourceNo == 2) {
@@ -390,6 +387,22 @@ public class PyOS {
 
 		// Remove resource from all resource list
 		resourceList.remove(listIndex);
+		// Remove resource from current owners list
+		Process owner = findProcessByIntIdInList(processList,resourceToDelete.user.intID);
+		if (owner != null) {
+			
+			int listIndex4 = 0;
+			listSize = owner.ownedResList.size();
+			for (int i = 1; i <= listSize; i++) {
+				if (owner.ownedResList.get(i - 1).intID == resourceToDelete.intID) {
+					listIndex4 = i - 1;
+				}
+			}
+			owner.ownedResList.remove(listIndex4);
+		}
+	
+	
+	
 	}
 
 	public static void freeResource(ArrayList<Process> list, int resourceNo,
@@ -526,7 +539,7 @@ public class PyOS {
 		planner();
 	}
 
-	// TODO is this the correct usage of extId?
+	// is this the correct usage of extId? Yes
 	public static Resource findResource(ArrayList<Resource> resList,
 			String resourceExtId) {
 		for (int i = 0; i < resList.size(); i++) {

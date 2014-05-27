@@ -13,17 +13,20 @@ public class StartStop extends Process {
 			//System resource initialization
 			PyOS.createResource(2, intID);
 			PyOS.elementList2.add(createdResList.get(0));
-			PyOS.elementList2.add(createdResList.get(0));
-			PyOS.elementList2.add(createdResList.get(0));
-			PyOS.elementList2.add(createdResList.get(0));
+			PyOS.createResource(2, intID);
+			PyOS.elementList2.add(createdResList.get(1));
+			PyOS.createResource(2, intID);
+			PyOS.elementList2.add(createdResList.get(2));
+			PyOS.createResource(2, intID);
+			PyOS.elementList2.add(createdResList.get(3));
 			PyOS.createResource(3, intID);
-			PyOS.elementList3.add(createdResList.get(1));
+			PyOS.elementList3.add(createdResList.get(4));
 			PyOS.createResource(4, intID);
-			PyOS.elementList4.add(createdResList.get(2));
+			PyOS.elementList4.add(createdResList.get(5));
 			PyOS.createResource(5, intID);
-			PyOS.elementList5.add(createdResList.get(3));
+			PyOS.elementList5.add(createdResList.get(6));
 			PyOS.createResource(6, intID);
-			PyOS.elementList6.add(createdResList.get(4));
+			PyOS.elementList6.add(createdResList.get(7));
 			//System process initialization
 			PyOS.createProcess(2, intID, 80, null);
 			PyOS.createProcess(3, intID, 90, null);
