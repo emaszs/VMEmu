@@ -4,7 +4,7 @@ import machine.Memory;
 import machine.RM;
 import res.LineInMemory;
 
-//TODO
+//TODO *** atlaisvinti supervizorine atminti
 public class ReadLineFromFlash extends Process {
 
 	public ReadLineFromFlash(int intID, String extID, int parentProcess,

@@ -15,15 +15,15 @@ public class OSUI {
 	public static BufferedWriter printer;
 
 	public static void main(final String[] args) {
-		// startOS();
+		startOS();
 		Hdd.initFiles();
-		System.out.println(Hdd.readProgramFromFile(0));
+		//System.out.println(Hdd.readProgramFromFile(0));
 	}
 
 	public static void startOS() {
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/Emilis/Desktop/gggg.txt"));
+					"C:/Users/Tomas/Desktop/gggg.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -58,8 +58,7 @@ public class OSUI {
 		if (modeChosen == 1) {
 			PyOS.processList.add(new StartStop(1, "StartStop", 0, 100, "re"));
 			PyOS.id = 1;
-
-			PyOS.planner();
+			PyOS.currentProcess = PyOS.processList.get(0);
 			// main OS loop
 			while (PyOS.MOSEnd != 1) {
 				if (PyOS.timer > 0) {

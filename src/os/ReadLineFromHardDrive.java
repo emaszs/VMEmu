@@ -5,7 +5,7 @@ import machine.RM;
 import memory.Hdd;
 import res.HardDriveMemory;
 
-//TODO
+//TODO *** atlaisvinti arba sunaikinti eilute
 public class ReadLineFromHardDrive extends Process {
 
 	public ReadLineFromHardDrive(int intID, String extID, int parentProcess,

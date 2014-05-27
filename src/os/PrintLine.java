@@ -6,7 +6,7 @@ import machine.RM;
 import res.LineInMemory;
 import ui.OSUI;
 
-//TODO
+//TODO *** sunaikinti arba atlaisvinti Eilute atmintyje
 public class PrintLine extends Process {
 
 	public PrintLine(int intID, String extID, int parentProcess, int priority,

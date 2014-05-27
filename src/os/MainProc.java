@@ -1,5 +1,5 @@
 package os;
-
+//TODO **** Sunaikinti Uzduotis kietajame diske resursa, po to kai sunaikinamas jobGov
 import res.TaskInHardDrive;
 
 //TODO
@@ -20,7 +20,7 @@ public class MainProc extends Process {
 		}
 
 		// 2-4) deleting or creating jobGovernor
-		if (phase == 1) {
+		if ((phase == 1) && (pState.equals("ru"))) {
 			if (((TaskInHardDrive) PyOS.findResource(ownedResList,
 					"TaskInHardDrive")).computingTime == 0) {
 				// TODO getting latest received TaskInHardDrive resource?
@@ -48,10 +48,10 @@ public class MainProc extends Process {
 		}
 
 		// TODO
-		if ((phase == 2) && (receivedResource == 7) && (pState.equals("ru"))) {
-			neededResource = 0;
-
-			phase = 0;
-		}
+		//if ((phase == 2) && (receivedResource == 7) && (pState.equals("ru"))) {
+		//	neededResource = 0;
+		//
+		//	phase = 0;
+		//}
 	}
 }

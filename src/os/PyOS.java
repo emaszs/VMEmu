@@ -105,6 +105,7 @@ public class PyOS {
 			int priority, Resource startingResource) {
 		Process newProcess = null;
 		id++;
+		System.out.println("Create process" + processNo);
 		// creating ReadJob
 		if (processNo == 2) {
 			newProcess = new ReadJob(id, "ReadJob", parentProcess, priority,
@@ -281,6 +282,7 @@ public class PyOS {
 	public static void createResource(int resourceNo, int creatorID) {
 		Resource newResource = null;
 		id2++;
+		System.out.println("Create resource" + resourceNo);
 		// create Supervizorine atmintis
 		if (resourceNo == 2) {
 			newResource = new SupervisorMemory(id2, "SupervisorMemory",
@@ -453,6 +455,7 @@ public class PyOS {
 	// Planner
 	public static void planner() {
 
+		System.out.println("Planner");
 		if (currentProcess.pState.equals("ru")) {
 			readyProcesses.add(currentProcess);
 			currentProcess.pState = "re";
@@ -481,6 +484,7 @@ public class PyOS {
 	// Resource distributor
 	public static void distributor(ArrayList<Process> list, int resourceNumber) {
 
+		System.out.println("Distributor");
 		if ((list.size() != 0) && (resourceAmounts[resourceNumber] != 0)) {
 
 			Process processToGetResource;

@@ -1,5 +1,6 @@
 package os;
 
+//TODO ***** Papildyti, atlaisvinti supervizorine atminti
 import java.io.IOException;
 
 import memory.Hdd;
@@ -14,7 +15,8 @@ public class ReadJob extends Process {
 	}
 	
 	public void run() {
-		
+		System.out.println("Current phase " + phase);
+		System.out.println("Current state " + pState);
 		//1) asks for Flash
 		if ((phase == 0) && (pState.equals("ru"))) {	
 			PyOS.askForResource(PyOS.waitingList6, 6);

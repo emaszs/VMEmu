@@ -5,7 +5,7 @@ import machine.RM;
 import res.MessageAboutIdentifiedInterrupt;
 import res.Resource;
 
-//TODO
+//TODO *** Uzbaigti
 public class JobGovernor extends Process {
 
 	public JobGovernor(int intID, String extID, int parentProcess,

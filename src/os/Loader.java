@@ -1,5 +1,5 @@
 package os;
-
+//TODO ****  Perduoti vartotojo atminti JobGov or smth
 import machine.Memory;
 import memory.Hdd;
 import memory.LoaderHelper;
