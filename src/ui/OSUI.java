@@ -15,15 +15,16 @@ public class OSUI {
 	public static BufferedWriter printer;
 
 	public static void main(final String[] args) {
-		startOS();
 		Hdd.initFiles();
+		startOS();
+
 		//System.out.println(Hdd.readProgramFromFile(0));
 	}
 
 	public static void startOS() {
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/Tomas/Desktop/gggg.txt"));
+					"C:/Users/user/Desktop/gggg.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
