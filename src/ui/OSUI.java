@@ -15,8 +15,8 @@ public class OSUI {
 	public static BufferedWriter printer;
 
 	public static void main(final String[] args) {
-		startOS();
 		Hdd.initFiles();
+		startOS();
 		//System.out.println(Hdd.readProgramFromFile(0));
 	}
 

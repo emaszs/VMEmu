@@ -64,9 +64,9 @@ public class ReadJob extends Process {
 		}
 		
 		//5 TODO free flash, hard drive resources
-		if (phase == 4) {
-			
-		}
+		//if (phase == 4) {
+		//	
+		//}
 		
 		//7) creates resource task in hard drive
 		//TODO resource should contain fileId
@@ -74,7 +74,9 @@ public class ReadJob extends Process {
 			
 			
 			PyOS.createResource(7, intID);
-			PyOS.freeResource(PyOS.waitingList7, 7, createdResList.get(createdResList.size()-1));
+			ownedResList.add(createdResList.get(createdResList.size()-1));
+			ownedResList.get(ownedResList.size()-1).user = PyOS.findProcessByIntId(intID);
+			PyOS.freeResource(PyOS.waitingList7, 7, ownedResList.get(ownedResList.size()-1));
 			phase = 0;
 		}
 	}
