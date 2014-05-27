@@ -36,8 +36,8 @@ public class OSUI {
 		do {
 			System.out
 					.println("Execute (w)hole package or in (s)tep-by-step mode?");
-			key = input.nextLine();
-
+			//key = input.nextLine();
+			key = "w";
 			switch (key) {
 			case "w":
 				System.out.println("Executing whole program");
