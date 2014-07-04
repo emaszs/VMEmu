@@ -2,7 +2,7 @@ package os;
 
 //TODO ***** Papildyti, atlaisvinti supervizorine atminti
 import java.io.IOException;
-
+import res.TaskInHardDrive;
 import memory.Hdd;
 import ui.OSUI;
 
@@ -15,8 +15,8 @@ public class ReadJob extends Process {
 	}
 	
 	public void run() {
-		System.out.println("Current phase " + phase);
-		System.out.println("Current state " + pState);
+		//System.out.println("Current phase " + phase);
+		//System.out.println("Current state " + pState);
 		//1) asks for Flash
 		if ((phase == 0) && (pState.equals("ru"))) {	
 			PyOS.askForResource(PyOS.waitingList6, 6);
@@ -49,16 +49,25 @@ public class ReadJob extends Process {
 			do {
 				try {
 					line = OSUI.flash.readLine();
-					Hdd.openFileForWriting(filesInUse);
-					Hdd.writeToFile(filesInUse, line);
-					Hdd.closeFile(filesInUse);
+					if (line != null) {
+						Hdd.openFileForWriting(filesInUse);
+						Hdd.writeToFile(filesInUse, line);
+						Hdd.closeFile(filesInUse);
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				
-			} while (!line.equals("$END"));
-			filesInUse++;
-			Hdd.initFiles();
+			} while (line != null && !line.equals("$END"));
+			
+			if (line == null) {
+				PyOS.askForResource(PyOS.waitingList1, 1);
+				PyOS.freeResource(PyOS.waitingList2, 2, ownedResList.get(1));
+				PyOS.freeResource(PyOS.waitingList4, 4, ownedResList.get(1));
+			} else {
+				filesInUse++;
+			}
+				
 			
 			
 			PyOS.freeResource(PyOS.waitingList6, 6, ownedResList.get(0));
@@ -66,18 +75,21 @@ public class ReadJob extends Process {
 		}
 		
 		//5 TODO free flash, hard drive resources
-		//if (phase == 4) {
-		//	
-		//}
+		if ((phase == 4) && (pState.equals("ru"))){
+			PyOS.freeResource(PyOS.waitingList2, 2, ownedResList.get(0));
+			PyOS.freeResource(PyOS.waitingList4, 4, ownedResList.get(0));
+			phase = 5;
+		}
 		
 		//7) creates resource task in hard drive
 		//TODO resource should contain fileId
-		if ((phase == 4) && (pState.equals("ru"))) {
+		if ((phase == 5) && (pState.equals("ru"))) {
 			
 			
 			PyOS.createResource(7, intID);
 			ownedResList.add(createdResList.get(createdResList.size()-1));
 			ownedResList.get(ownedResList.size()-1).user = PyOS.findProcessByIntId(intID);
+			((TaskInHardDrive)ownedResList.get(ownedResList.size()-1)).computingTime = 1;
 			PyOS.freeResource(PyOS.waitingList7, 7, ownedResList.get(ownedResList.size()-1));
 			phase = 0;
 		}

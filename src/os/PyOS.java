@@ -2,7 +2,9 @@ package os;
 
 import java.util.ArrayList;
 
+import machine.Memory;
 import res.Flash;
+import res.HardDriveMemory;
 import res.LineInMemory;
 import res.MessageAboutIdentifiedInterrupt;
 import res.MessageAboutInterrupt;
@@ -297,7 +299,7 @@ public class PyOS {
 
 		// create Kietojo disko atmintis
 		if (resourceNo == 4) {
-			newResource = new SupervisorMemory(id2, "HardDriveMemory",
+			newResource = new HardDriveMemory(id2, "HardDriveMemory",
 					creatorID);
 		}
 
@@ -476,6 +478,7 @@ public class PyOS {
 			}
 
 			currentProcess = readyProcesses.get(index);
+			readyProcesses.remove(index);
 			currentProcess.pState = "ru";
 			PyOS.timer = 10;
 		}

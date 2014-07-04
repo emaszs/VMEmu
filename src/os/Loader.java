@@ -14,28 +14,28 @@ public class Loader extends Process {
 	}
 
 	public void run() {
-
+		//System.out.println(phase + " faze, ");
 		// 1) asks for message from job governor
 		if ((phase == 0) && (pState.equals("ru"))) {
 			PyOS.askForResource(PyOS.waitingList8, 8);
 			neededResource = 8;
 			phase = 1;
 		}
-
+		//System.out.println(phase + " faze, ");
 		// 2) asks for hard drive memory
 		if ((phase == 1) && (receivedResource == 8) && (pState.equals("ru"))) {
 			PyOS.askForResource(PyOS.waitingList4, 4);
 			neededResource = 4;
 			phase = 2;
 		}
-
+		//System.out.println(phase + " faze, ");
 		// 3) asks for user memory
 		if ((phase == 2) && (receivedResource == 4) && (pState.equals("ru"))) {
 			PyOS.askForResource(PyOS.waitingList3, 3);
 			neededResource = 3;
 			phase = 3;
 		}
-
+		//System.out.println(phase + " faze, ");
 		// 4-5) loads program and frees Task in user memory resource
 		// TODO
 		if ((phase == 3) && (receivedResource == 3) && (pState.equals("ru"))) {
@@ -44,6 +44,8 @@ public class Loader extends Process {
 			int fileNum = ((HardDriveMemory) PyOS.findResource(ownedResList,
 					"HardDriveMemory")).fileId;
 			String line = new String();
+			Hdd.initFiles();
+			Hdd.openFileForReading(fileNum);
 			while ((line = Hdd.readFromFile(fileNum)) != null) {
 
 				if (LoaderHelper.isLegal(line)) {
@@ -86,13 +88,15 @@ public class Loader extends Process {
 					break;
 				}
 			}
+			Hdd.closeFile(fileNum);
 			// Nuspresk, ar Task in user memory tures svarbios info
 			// Netures
 			PyOS.freeResource(PyOS.waitingList9, 9, ownedResList.get(0));
 			neededResource = 0;
 			phase = 4;
+			Memory.printMemory();
 		}
-
+		//System.out.println(phase + " faze, ");
 		// 6-7) free Hard drive memory resource
 		// TODO
 		if ((phase == 4) && (pState.equals("ru"))) {

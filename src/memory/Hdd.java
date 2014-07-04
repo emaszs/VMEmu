@@ -9,7 +9,7 @@ import machine.RM;
 public class Hdd {
 	public static final int FILE_LENGTH = 30;
 	public static final int FILE_NUM = 3;
-	public static final String REAL_FILE_LOC = "C:/Users/user/Desktop/hdd.txt";
+	public static final String REAL_FILE_LOC = "C:/Users/Tomas/Desktop/hdd.txt";
 	public static FileInfo[] fileList = new FileInfo[3];
 
 	public static void seekCursor(int fileNum, int lineNum) {
@@ -46,7 +46,7 @@ public class Hdd {
 	}
 
 	public static void writeToFile(int fileNum, String val) {
-		System.out.println(fileList[fileNum].fileLocation);
+		//System.out.println(fileList[fileNum].fileLocation);
 		if (fileList[fileNum].fileIsOpenForWriting && !fileList[fileNum].fileIsBeingWrittenTo) {
 
 			File file = new File(REAL_FILE_LOC);

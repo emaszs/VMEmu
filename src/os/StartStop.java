@@ -1,4 +1,7 @@
 package os;
+
+import machine.Memory;
+
 //TODO
 public class StartStop extends Process {
 
@@ -13,21 +16,21 @@ public class StartStop extends Process {
 			//System resource initialization
 			PyOS.createResource(2, intID);
 			PyOS.elementList2.add(createdResList.get(0));
-			PyOS.createResource(2, intID);
-			PyOS.elementList2.add(createdResList.get(1));
-			PyOS.createResource(2, intID);
-			PyOS.elementList2.add(createdResList.get(2));
-			PyOS.createResource(2, intID);
-			PyOS.elementList2.add(createdResList.get(3));
-			PyOS.resourceAmounts[2] = 4;
+			PyOS.resourceAmounts[2] = 1;
 			
 			PyOS.createResource(3, intID);
-			PyOS.resourceAmounts[3] = 1;
+			PyOS.elementList3.add(createdResList.get(1));
+			PyOS.createResource(3, intID);
+			PyOS.elementList3.add(createdResList.get(2));
+			PyOS.createResource(3, intID);
+			PyOS.elementList3.add(createdResList.get(3));
+			PyOS.createResource(3, intID);
 			PyOS.elementList3.add(createdResList.get(4));
+			PyOS.resourceAmounts[3] = 4;
 			
 			PyOS.createResource(4, intID);
-			PyOS.resourceAmounts[4] = 1;
 			PyOS.elementList4.add(createdResList.get(5));
+			PyOS.resourceAmounts[4] = 1;
 			
 			PyOS.createResource(5, intID);
 			PyOS.resourceAmounts[5] = 1;
@@ -57,6 +60,7 @@ public class StartStop extends Process {
 		if ((phase == 1) && (receivedResource == 1) && (pState.equals("ru"))) {
 			neededResource = 0;	
 			//Process deletion
+			Memory.printMemory();
 			while (PyOS.processList.size()>1) {
 				PyOS.deleteProcess(PyOS.processList.get(1).intID, PyOS.findChildrenListIndex(PyOS.processList.get(1).intID));
 			}

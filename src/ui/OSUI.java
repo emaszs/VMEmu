@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import machine.Memory;
 import memory.Hdd;
 import os.PyOS;
 import os.StartStop;
@@ -16,6 +17,7 @@ public class OSUI {
 
 	public static void main(final String[] args) {
 		Hdd.initFiles();
+		Memory.initMemory();
 		startOS();
 		//System.out.println(Hdd.readProgramFromFile(0));
 	}
@@ -23,7 +25,7 @@ public class OSUI {
 	public static void startOS() {
 		try {
 			flash = new BufferedReader(new FileReader(
-					"C:/Users/user/Desktop/gggg.txt"));
+					"C:/Users/Tomas/Desktop/gggg.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -62,6 +64,7 @@ public class OSUI {
 			// main OS loop
 			while (PyOS.MOSEnd != 1) {
 				if (PyOS.timer > 0) {
+					System.out.println(PyOS.currentProcess.extID);
 					PyOS.currentProcess.run();
 					PyOS.timer--;
 				} else {

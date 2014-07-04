@@ -4,6 +4,7 @@ import machine.Memory;
 import machine.RM;
 import res.MessageAboutIdentifiedInterrupt;
 import res.Resource;
+import res.TaskInHardDrive;
 
 //TODO *** Uzbaigti
 public class JobGovernor extends Process {
@@ -22,7 +23,7 @@ public class JobGovernor extends Process {
 
 			Memory.allocatePageTableToVM();
 			Memory.allocateNumBlocksToVM(10);
-
+			saveState();
 			neededResource = 3;
 			phase = 1;
 		}
@@ -85,6 +86,12 @@ public class JobGovernor extends Process {
 				// TODO jobGov is blocked until done
 			} else if (msg.interruptType.equals("Program")
 					|| msg.interruptType.equals("Halt")) {
+				PyOS.stopProcess(childrenList.get(0).intID);
+				PyOS.askForResource(PyOS.waitingList1, 1);
+				PyOS.createResource(7, intID);
+				((TaskInHardDrive)createdResList.get(createdResList.size()-1)).computingTime = 0;
+				ownedResList.add(createdResList.get(createdResList.size()-1));
+				PyOS.freeResource(PyOS.waitingList7, 7, ownedResList.get(ownedResList.size()-1));
 				// TODO stop VM process
 				// TODO block JobGov process with fictional resource
 				// TaskInHardDrive

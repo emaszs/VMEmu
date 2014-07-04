@@ -267,7 +267,10 @@ public class Processing {
 					// } catch (IOException e) {
 					// e.printStackTrace();
 					// }
-					PyOS.freeResource(PyOS.waitingList20, 20, null);
+					PyOS.createResource(20,PyOS.currentProcess.intID);
+					PyOS.currentProcess.ownedResList.add(PyOS.currentProcess.createdResList.get(PyOS.currentProcess.createdResList.size()-1));
+					PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1).user = PyOS.currentProcess;
+					PyOS.freeResource(PyOS.waitingList20, 20, PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1));
 				}
 
 				// if output is finished
@@ -310,7 +313,10 @@ public class Processing {
 					// e.printStackTrace();
 					// }
 
-					PyOS.freeResource(PyOS.waitingList20, 20, null);
+					PyOS.createResource(20,PyOS.currentProcess.intID);
+					PyOS.currentProcess.ownedResList.add(PyOS.currentProcess.createdResList.get(PyOS.currentProcess.createdResList.size()-1));
+					PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1).user = PyOS.currentProcess;
+					PyOS.freeResource(PyOS.waitingList20, 20, PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1));
 				}
 				// if input is finished
 				if (RM.chstFlash == 1 && RM.r2.getInt() == 0) {
@@ -370,7 +376,10 @@ public class Processing {
 					// RM.r2.setInt(counter - 1); // one iteration complete
 
 					// freeing msg about int
-					PyOS.freeResource(PyOS.waitingList20, 20, null);
+					PyOS.createResource(20,PyOS.currentProcess.intID);
+					PyOS.currentProcess.ownedResList.add(PyOS.currentProcess.createdResList.get(PyOS.currentProcess.createdResList.size()-1));
+					PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1).user = PyOS.currentProcess;
+					PyOS.freeResource(PyOS.waitingList20, 20, PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1));
 				}
 
 				// if input is finished
@@ -409,7 +418,11 @@ public class Processing {
 					// Memory.writeToVirtualAddress(adrToWrite, valToWrite);
 					// RM.r1.setInt(RM.r1.getInt() + 1);
 					// RM.r2.setInt(counter - 1); // one iteration complete
-					PyOS.freeResource(PyOS.waitingList20, 20, null);
+					
+					PyOS.createResource(20,PyOS.currentProcess.intID);
+					PyOS.currentProcess.ownedResList.add(PyOS.currentProcess.createdResList.get(PyOS.currentProcess.createdResList.size()-1));
+					PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1).user = PyOS.currentProcess;
+					PyOS.freeResource(PyOS.waitingList20, 20, PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1));
 				}
 
 				// if input is finished
@@ -426,6 +439,11 @@ public class Processing {
 		} else if (cmd.matches("HALT")) {
 			for (int i = 0; i < RM.si.length; i++) {
 				RM.si[i] = '9';
+				PyOS.createResource(20,PyOS.currentProcess.intID);
+				PyOS.currentProcess.ownedResList.add(PyOS.currentProcess.createdResList.get(PyOS.currentProcess.createdResList.size()-1));
+				PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1).user = PyOS.currentProcess;
+				PyOS.freeResource(PyOS.waitingList20, 20, PyOS.currentProcess.ownedResList.get(PyOS.currentProcess.ownedResList.size()-1));
+				
 			}
 		}
 	}

@@ -44,7 +44,7 @@ public class MainProc extends Process {
 				PyOS.createProcess(10, intID, 50,
 						ownedResList.get(ownedResList.size() - 1));
 			}
-			phase = 2;
+			phase = 0;
 		}
 
 		// TODO
